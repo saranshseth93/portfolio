@@ -87,3 +87,44 @@
 @media (prefers-reduced-motion: reduce) {
   .boot { @apply m-0; min-height: 0; }
 }
+
+/* Per-theme portrait treatments. Applied to .portrait-img only; no effect on text. */
+[data-theme="midnight"] .portrait-img { filter: grayscale(1) contrast(1.08); }
+/* Pixel: quantised green/amber, pixelated edges via SVG filter. */
+[data-theme="pixel"] .portrait-img { filter: url(#px-dither); image-rendering: pixelated; }
+/* Blueprint: cyan edge-detect line drawing via SVG filter. */
+[data-theme="blueprint"] .portrait-img { filter: url(#bp-edge); }
+
+/* Theme overlays: decorative, portrait region only, pointer-events none. */
+.hero-portrait { isolation: isolate; }
+
+/* Pixel: CRT scanlines + vignette. */
+[data-theme="pixel"] .hero-portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px),
+    radial-gradient(120% 120% at 50% 40%, transparent 55%, rgba(0,0,0,0.5));
+  mix-blend-mode: multiply;
+}
+
+/* Blueprint: hairline drafting grid. */
+[data-theme="blueprint"] .hero-portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(79,195,247,0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,195,247,0.10) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Reduced-motion: strip scanlines from the Pixel overlay, keep vignette only. */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="pixel"] .hero-portrait::after {
+    background: radial-gradient(120% 120% at 50% 40%, transparent 60%, rgba(0,0,0,0.4));
+  }
+}
