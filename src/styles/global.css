@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+/* Default theme: Midnight. These generate the semantic utilities. */
+@theme {
+  --color-bg: #0E0E12;
+  --color-surface: #16161C;
+  --color-text: #EDEAE3;
+  --color-text-muted: #9A968C;
+  --color-accent: #AD2B63;
+  --color-accent-2: #C9A227;
+  --color-focus: #C9A227;
+
+  --font-display: "Hanken Grotesk", system-ui, sans-serif;
+  --font-body: "Hanken Grotesk", system-ui, sans-serif;
+}
+
+/* Pixel: retro phosphor. textMuted is spec value #6E8C5A, which passes AA. Matches tests/themes.ts. */
+[data-theme="pixel"] {
+  --color-bg: #0B0E0A;
+  --color-surface: #11160F;
+  --color-text: #C7F2A4;
+  --color-text-muted: #6E8C5A;
+  --color-accent: #5CE65C;
+  --color-accent-2: #FFB000;
+  --color-focus: #FFB000;
+  --font-display: "Press Start 2P", monospace;
+  --font-body: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Blueprint: technical drafting. */
+[data-theme="blueprint"] {
+  --color-bg: #0A1830;
+  --color-surface: #0E2142;
+  --color-text: #DCEAF7;
+  --color-text-muted: #7FA6CC;
+  --color-accent: #4FC3F7;
+  --color-accent-2: #A7D8FF;
+  --color-focus: #4FC3F7;
+  --font-display: "JetBrains Mono", ui-monospace, monospace;
+  --font-body: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Visible keyboard focus in every theme. */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
