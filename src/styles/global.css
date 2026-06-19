@@ -80,9 +80,10 @@
   .link { @apply text-text underline decoration-text-muted underline-offset-4 hover:decoration-accent; }
   .hero-portrait { @apply relative w-40 sm:w-60; }
   .portrait-img { @apply h-auto w-full select-none; }
-  .boot { @apply mb-4 font-body text-xs leading-relaxed text-text-muted whitespace-pre-wrap; }
+  /* min-height reserves the final four-line height so the typing animation does not push the name down (CLS). */
+  .boot { @apply mb-4 font-body text-xs leading-relaxed text-text-muted whitespace-pre-wrap; min-height: calc(4 * 1.625em); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .boot { @apply m-0; }
+  .boot { @apply m-0; min-height: 0; }
 }
