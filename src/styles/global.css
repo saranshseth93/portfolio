@@ -13,9 +13,9 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "Press Start 2P";
-  src: url("/fonts/press-start-2p.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "Pixelify Sans";
+  src: url("/fonts/pixelify-sans-var.woff2") format("woff2");
+  font-weight: 400 700;
   font-display: swap;
 }
 
@@ -42,7 +42,7 @@
   --color-accent: #5CE65C;
   --color-accent-2: #FFB000;
   --color-focus: #FFB000;
-  --font-display: "Press Start 2P", monospace;
+  --font-display: "Pixelify Sans", ui-monospace, monospace;
   --font-body: "JetBrains Mono", ui-monospace, monospace;
 }
 
