@@ -1,7 +1,15 @@
 ---
 import "../styles/global.css";
+import hankenFont from "../assets/fonts/hanken-grotesk-var.woff2";
 interface Props { title: string; description: string; }
 const { title, description } = Astro.props;
+
+// Base-aware URLs so the same code works on the GitHub Pages subpath now and a
+// custom domain later (switch is just site + base in astro.config.mjs).
+const base = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(`${base}og.png`, Astro.site).href;
+const favicon = `${base}favicon.svg`;
 ---
 <!doctype html>
 <html lang="en" data-theme="midnight">
@@ -10,24 +18,24 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href="https://saranshseth.me/" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href="/fonts/hanken-grotesk-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={favicon} type="image/svg+xml" />
+    <link rel="preload" href={hankenFont} as="font" type="font/woff2" crossorigin />
     <meta name="theme-color" content="#0E0E12" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content="https://saranshseth.me/" />
-    <meta property="og:image" content="https://saranshseth.me/og.png" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://saranshseth.me/og.png" />
+    <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Person",
       name: "Saransh Seth",
       jobTitle: "Senior Frontend Engineer, Design Systems Tech Lead",
       address: { "@type": "PostalAddress", addressLocality: "Melbourne", addressCountry: "AU" },
-      url: "https://saranshseth.me/",
+      url: canonical,
       sameAs: ["https://github.com/saranshseth93", "https://linkedin.com/in/saranshseth"],
     })} />
     <script is:inline>
