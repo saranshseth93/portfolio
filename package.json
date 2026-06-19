@@ -1,0 +1,30 @@
+{
+  "name": "saranshseth-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "images": "node scripts/build-images.mjs"
+  },
+  "dependencies": {
+    "astro": "^6.4.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.1",
+    "tailwindcss": "^4.3.1",
+    "sharp": "^0.35.1",
+    "vitest": "^4.1.9"
+  },
+  "allowScripts": {
+    "sharp@0.34.5": true,
+    "sharp@0.35.1": true,
+    "esbuild@0.27.7": true,
+    "fsevents@2.3.3": true
+  },
+  "overrides": {
+    "vite": "^7"
+  }
+}
