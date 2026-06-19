@@ -1400,6 +1400,108 @@ Invoke superpowers:finishing-a-development-branch to decide on merge/PR/cleanup.
 
 ---
 
+### Task 13: GitHub Actions deploy to GitHub Pages
+
+Added per user request. Deploy target is the project repo `saranshseth93/portfolio`, so the
+live URL is `https://saranshseth93.github.io/portfolio`. This supersedes the spec's Cloudflare
+Pages target. A custom domain (saranshseth.me) comes later; the config is written so that switch
+is a one-line change.
+
+**Files:**
+- Create: `.github/workflows/deploy.yml`
+- Modify: `astro.config.mjs` (site + base), `src/layouts/BaseLayout.astro` (derive head URLs from `Astro.site`)
+
+**Interfaces:**
+- Produces: a CI workflow that builds the site and publishes to GitHub Pages on push to `main`.
+
+- [ ] **Step 1: Set `site` and `base` in `astro.config.mjs`**
+
+For the project-page deploy. One `SITE`/`BASE` pair, so the custom-domain switch later is a single edit.
+
+```js
+import { defineConfig } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
+
+// Project-page deploy: https://saranshseth93.github.io/portfolio
+// For the custom domain later, set site to "https://saranshseth.me" and base to "/".
+export default defineConfig({
+  site: "https://saranshseth93.github.io",
+  base: "/portfolio",
+  vite: { plugins: [tailwindcss()] },
+});
+```
+
+- [ ] **Step 2: Derive absolute head URLs from `Astro.site` in `BaseLayout.astro`**
+
+Replace the hardcoded `https://saranshseth.me/...` URLs in canonical, og:url, og:image, twitter:image, and JSON-LD with values built from `Astro.site` so they are correct on whatever domain ships. In the frontmatter:
+
+```astro
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(`${import.meta.env.BASE_URL}og.png`, Astro.site).href;
+```
+
+Use `canonical` for `<link rel="canonical">`, `og:url`, and JSON-LD `url`; use `ogImage` for `og:image` and `twitter:image`. The favicon and font preload hrefs must include the base: prefix them with `import.meta.env.BASE_URL` (e.g. `${import.meta.env.BASE_URL}fonts/hanken-grotesk-var.woff2`). Astro prefixes asset and `<img>` import URLs with base automatically, but literal hrefs in the head do not get the prefix, so add it explicitly.
+
+- [ ] **Step 3: Verify base-aware build locally**
+
+Run: `npm run build` then check `dist/index.html`: the canonical and og:url should be `https://saranshseth93.github.io/portfolio/`, and the font preload / favicon hrefs should start with `/portfolio/`. Run `npm run preview` and confirm the page and fonts load under the `/portfolio` base.
+
+- [ ] **Step 4: Create `.github/workflows/deploy.yml`**
+
+Uses the official Astro GitHub Pages action, which handles base-path and Pages artifact upload.
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: withastro/action@v3
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+- [ ] **Step 5: Enable Pages and push**
+
+Set the repo Pages source to GitHub Actions, then push to `main`:
+
+```bash
+gh api -X POST repos/saranshseth93/portfolio/pages -f build_type=workflow 2>/dev/null || true
+git push origin main
+gh run watch
+```
+
+Confirm the workflow succeeds and the site is live at `https://saranshseth93.github.io/portfolio`.
+
+- [ ] **Step 6: Custom domain note**
+
+When ready for saranshseth.me: set `astro.config.mjs` site to `https://saranshseth.me` and base to `/`, add a `public/CNAME` file containing `saranshseth.me`, configure the domain in the repo Pages settings and the DNS, then push. The head URLs already follow `Astro.site`, so no other code changes are needed.
+
+---
+
 ## Self-Review
 
 **Spec coverage:**
