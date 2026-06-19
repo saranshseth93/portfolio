@@ -1,6 +1,24 @@
+---
+import lqip from "../assets/portrait/lqip.txt?raw";
+import a1200 from "../assets/portrait/portrait-1200.avif";
+import a600 from "../assets/portrait/portrait-600.avif";
+import w1200 from "../assets/portrait/portrait-1200.webp";
+import w600 from "../assets/portrait/portrait-600.webp";
+// Cutout aspect ratio from source 1792x2390. W=480 H=640 preserves the 3:4 ratio.
+const W = 480, H = 640;
+---
 <section id="hero" class="mx-auto grid max-w-3xl gap-8 px-6 pt-12 pb-8 sm:grid-cols-[auto_1fr] sm:items-center">
-  <div class="hero-portrait" aria-hidden="false">
-    <!-- Task 8 inserts the optimised <img> here. Task 11 overlays the WebGL canvas. -->
+  <div class="hero-portrait" data-hero-portrait>
+    <picture>
+      <source type="image/avif" srcset={`${a600} 600w, ${a1200} 1200w`} sizes="(max-width: 640px) 60vw, 240px" />
+      <source type="image/webp" srcset={`${w600} 600w, ${w1200} 1200w`} sizes="(max-width: 640px) 60vw, 240px" />
+      <img
+        src={w1200} width={W} height={H} fetchpriority="high" decoding="async"
+        alt="Black and white portrait of Saransh Seth wearing aviator sunglasses, a city skyline reflected in the lenses."
+        class="portrait-img" style={`background-image:url(${lqip.trim()});background-size:cover;`}
+        onload="this.style.backgroundImage='none'"
+      />
+    </picture>
   </div>
   <div>
     <h1 class="font-display text-4xl font-semibold sm:text-5xl">Saransh Seth</h1>
