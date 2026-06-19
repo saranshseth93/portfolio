@@ -4,6 +4,7 @@ import a1200 from "../assets/portrait/portrait-1200.avif";
 import a600 from "../assets/portrait/portrait-600.avif";
 import w1200 from "../assets/portrait/portrait-1200.webp";
 import w600 from "../assets/portrait/portrait-600.webp";
+import BootSequence from "./BootSequence.astro";
 // Cutout aspect ratio from source 1792x2390. W=480 H=640 preserves the 3:4 ratio.
 const W = 480, H = 640;
 ---
@@ -21,6 +22,7 @@ const W = 480, H = 640;
     </picture>
   </div>
   <div>
+    <BootSequence />
     <h1 class="font-display text-4xl font-semibold sm:text-5xl">Saransh Seth</h1>
     <p class="mt-3 text-text-muted">Senior Frontend Engineer &middot; Design Systems Tech Lead &middot; Melbourne</p>
   </div>

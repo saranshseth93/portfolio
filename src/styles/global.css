@@ -80,4 +80,9 @@
   .link { @apply text-text underline decoration-text-muted underline-offset-4 hover:decoration-accent; }
   .hero-portrait { @apply relative w-40 sm:w-60; }
   .portrait-img { @apply h-auto w-full select-none; }
+  .boot { @apply mb-4 font-body text-xs leading-relaxed text-text-muted whitespace-pre-wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot { @apply m-0; }
 }
