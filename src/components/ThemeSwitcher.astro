@@ -1,0 +1,19 @@
+---
+const themes = [
+  { id: "midnight", label: "Midnight" },
+  { id: "pixel", label: "Pixel" },
+  { id: "blueprint", label: "Blueprint" },
+];
+---
+<div class="theme-switcher" role="group" aria-label="Colour theme">
+  {themes.map((t) => (
+    <button type="button" class="swatch" data-theme-btn={t.id} aria-pressed={t.id === "midnight" ? "true" : "false"}>
+      <span class={`dot dot-${t.id}`} aria-hidden="true"></span>{t.label}
+    </button>
+  ))}
+</div>
+
+<script>
+  import { initThemeSwitcher } from "../scripts/theme";
+  initThemeSwitcher();
+</script>
