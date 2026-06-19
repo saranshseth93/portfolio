@@ -49,3 +49,13 @@ const W = 480, H = 640;
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
   </a>
 </section>
+
+<script>
+  // Init the cursor-reveal shader on first hover of the portrait, so it costs nothing
+  // at load (zero TBT) and only spins up WebGL when a pointer user actually engages.
+  import { initHeroShader } from "../scripts/hero-shader";
+  const host = document.querySelector("[data-hero-portrait]");
+  if (host) {
+    host.addEventListener("pointerenter", () => initHeroShader(), { once: true });
+  }
+</script>

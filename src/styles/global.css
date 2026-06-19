@@ -148,6 +148,7 @@ html, body { overflow-x: clip; max-width: 100%; }
 .hero-portrait { position: relative; isolation: isolate; order: 1; justify-self: center; height: min(46svh, 19rem); }
 .hero-portrait picture { display: block; height: 100%; }
 .hero-portrait .portrait-img { height: 100%; width: auto; }
+.portrait-canvas { position: absolute; inset: 0; height: 100%; width: 100%; }
 @media (min-width: 768px) {
   .hero-portrait { order: 0; justify-self: end; height: clamp(26rem, 82svh, 46rem); margin-right: clamp(-3rem, -3vw, 0rem); }
 }
