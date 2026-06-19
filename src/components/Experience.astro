@@ -6,10 +6,10 @@ const roles = [
 ];
 ---
 <section id="experience" class="mx-auto max-w-3xl px-6 py-12">
-  <h2 class="font-display text-sm uppercase tracking-widest text-text-muted">Experience</h2>
+  <h2 class="font-display text-sm uppercase tracking-widest text-text-muted" data-reveal>Experience</h2>
   <ul class="mt-6 divide-y divide-surface">
-    {roles.map((r) => (
-      <li class="exp-row">
+    {roles.map((r, i) => (
+      <li class="exp-row" data-reveal data-reveal-delay={String(i * 90)}>
         <div>
           <p class="font-medium text-text">{r.company}</p>
           <p class="text-text-muted">{r.role}</p>

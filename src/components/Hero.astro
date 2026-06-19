@@ -5,30 +5,47 @@ import a600 from "../assets/portrait/portrait-600.avif";
 import w1200 from "../assets/portrait/portrait-1200.webp";
 import w600 from "../assets/portrait/portrait-600.webp";
 import BootSequence from "./BootSequence.astro";
+import ThemeSwitcher from "./ThemeSwitcher.astro";
 // Cutout aspect ratio from source 1792x2390. W=480 H=640 preserves the 3:4 ratio.
 const W = 480, H = 640;
 ---
-<section id="hero" class="mx-auto grid max-w-3xl gap-8 px-6 pt-12 pb-8 sm:grid-cols-[auto_1fr] sm:items-center">
-  <div class="hero-portrait" data-hero-portrait>
-    <!-- SVG filter defs: decorative per-theme portrait treatments. Hidden from accessibility tree. -->
-    <svg width="0" height="0" aria-hidden="true" style="position:absolute">
-      <filter id="px-dither"><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="discrete" tableValues="0 0.36 0.9"/><feFuncG type="discrete" tableValues="0.04 0.55 0.95"/><feFuncB type="discrete" tableValues="0 0.2 0.4"/></feComponentTransfer></filter>
-      <filter id="bp-edge"><feColorMatrix type="saturate" values="0"/><feConvolveMatrix order="3" kernelMatrix="1 0 -1 2 0 -2 1 0 -1" preserveAlpha="true"/><feComponentTransfer><feFuncR type="linear" slope="0.3"/><feFuncG type="linear" slope="0.76"/><feFuncB type="linear" slope="0.97"/></feComponentTransfer></filter>
-    </svg>
-    <picture>
-      <source type="image/avif" srcset={`${a600} 600w, ${a1200} 1200w`} sizes="(max-width: 640px) 60vw, 240px" />
-      <source type="image/webp" srcset={`${w600} 600w, ${w1200} 1200w`} sizes="(max-width: 640px) 60vw, 240px" />
-      <img
-        src={w1200} width={W} height={H} fetchpriority="high" decoding="async"
-        alt="Black and white portrait of Saransh Seth wearing aviator sunglasses, a city skyline reflected in the lenses."
-        class="portrait-img" style={`background-image:url(${lqip.trim()});background-size:cover;`}
-        onload="this.style.backgroundImage='none'"
-      />
-    </picture>
+<section id="hero" class="hero">
+  <!-- Per-theme atmosphere washing across the whole first screen. Decorative. -->
+  <div class="hero-atmosphere" aria-hidden="true"></div>
+
+  <div class="hero-switcher">
+    <ThemeSwitcher />
   </div>
-  <div>
-    <BootSequence />
-    <h1 class="font-display text-4xl font-semibold sm:text-5xl">Saransh Seth</h1>
-    <p class="mt-3 text-text-muted">Senior Frontend Engineer &middot; Design Systems Tech Lead &middot; Melbourne</p>
+
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <BootSequence />
+      <h1 class="hero-name">Saransh Seth</h1>
+      <p class="hero-tagline">Senior Frontend Engineer &middot; Design Systems Tech Lead &middot; Melbourne</p>
+    </div>
+
+    <div class="hero-portrait" data-hero-portrait>
+      <!-- SVG filter defs: decorative per-theme portrait treatments. Hidden from accessibility tree. -->
+      <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+        <filter id="px-dither"><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="discrete" tableValues="0 0.36 0.9"/><feFuncG type="discrete" tableValues="0.04 0.55 0.95"/><feFuncB type="discrete" tableValues="0 0.2 0.4"/></feComponentTransfer></filter>
+        <filter id="bp-edge"><feColorMatrix type="saturate" values="0"/><feConvolveMatrix order="3" kernelMatrix="1 0 -1 2 0 -2 1 0 -1" preserveAlpha="true"/><feComponentTransfer><feFuncR type="linear" slope="0.3"/><feFuncG type="linear" slope="0.76"/><feFuncB type="linear" slope="0.97"/></feComponentTransfer></filter>
+      </svg>
+      <picture>
+        <source type="image/avif" srcset={`${a600.src} 600w, ${a1200.src} 1200w`} sizes="(max-width: 768px) 90vw, 48vw" />
+        <source type="image/webp" srcset={`${w600.src} 600w, ${w1200.src} 1200w`} sizes="(max-width: 768px) 90vw, 48vw" />
+        <img
+          src={w1200.src} width={W} height={H} fetchpriority="high" decoding="async"
+          alt="Black and white portrait of Saransh Seth wearing aviator sunglasses, a city skyline reflected in the lenses."
+          class="portrait-img" style={`background-image:url(${lqip.trim()});background-size:cover;`}
+          onload="this.style.backgroundImage='none'"
+        />
+      </picture>
+      <span class="hero-hint" aria-hidden="true">move to reveal</span>
+    </div>
   </div>
+
+  <a class="hero-scroll" href="#currently" aria-label="Scroll to the rest of the page">
+    <span>scroll</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+  </a>
 </section>
