@@ -197,10 +197,6 @@ html, body { overflow-x: clip; max-width: 100%; }
   background-size: 100% 100%, 28px 28px, 28px 28px;
   opacity: 0.9;
 }
-[data-theme="blueprint"] .hero-atmosphere::before {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, transparent);
-}
 
 /* Small screens: compact switcher in the top-right (the ~217px control fits down to 320px). */
 @media (max-width: 767px) {

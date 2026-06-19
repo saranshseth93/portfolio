@@ -51,11 +51,22 @@ export function initMotion(): void {
     easing: (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
   });
 
+  let rafId = 0;
   const raf = (time: number) => {
     lenis.raf(time);
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
   };
-  requestAnimationFrame(raf);
+  rafId = requestAnimationFrame(raf);
+
+  // Pause the scroll loop on hidden tabs so it does not burn CPU in the background.
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    } else if (!rafId) {
+      rafId = requestAnimationFrame(raf);
+    }
+  });
 
   // Smooth the in-page scroll cue.
   for (const link of document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')) {

@@ -42,10 +42,18 @@ export function initHeroShader(): void {
   const gl = canvas.getContext("webgl", { premultipliedAlpha: true, alpha: true });
   if (!gl) return;
 
-  const program = gl.createProgram()!;
-  gl.attachShader(program, compile(gl, gl.VERTEX_SHADER, vertSrc));
-  gl.attachShader(program, compile(gl, gl.FRAGMENT_SHADER, fragSrc));
-  gl.linkProgram(program);
+  // Build the program. On any compile or link failure, bail before hiding the
+  // image so the static CSS-treated portrait stays as the fallback.
+  let program: WebGLProgram;
+  try {
+    program = gl.createProgram()!;
+    gl.attachShader(program, compile(gl, gl.VERTEX_SHADER, vertSrc));
+    gl.attachShader(program, compile(gl, gl.FRAGMENT_SHADER, fragSrc));
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+  } catch {
+    return;
+  }
   gl.useProgram(program);
 
   const buffer = gl.createBuffer();
