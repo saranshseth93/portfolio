@@ -1,10 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ThemeSwitcher from "../components/ThemeSwitcher.astro";
+import Hero from "../components/Hero.astro";
+import Currently from "../components/Currently.astro";
+import Experience from "../components/Experience.astro";
+import SocialLinks from "../components/SocialLinks.astro";
 ---
-<BaseLayout title="Saransh Seth" description="Senior Frontend Engineer and Design Systems Tech Lead in Melbourne.">
+<BaseLayout title="Saransh Seth, Senior Frontend Engineer and Design Systems Tech Lead" description="Senior Frontend Engineer and Design Systems Tech Lead in Melbourne. Token-driven theming, performance, and accessible interfaces.">
   <header class="mx-auto flex max-w-3xl justify-end px-6 py-6"><ThemeSwitcher /></header>
-  <main class="mx-auto max-w-3xl px-6 pb-24">
-    <h1 class="text-text">Saransh Seth</h1>
+  <main>
+    <Hero />
+    <Currently />
+    <Experience />
+    <SocialLinks />
   </main>
+  <footer class="mx-auto max-w-3xl px-6 py-12 text-sm text-text-muted">
+    <p>Built with Astro and Tailwind. Melbourne, Australia.</p>
+  </footer>
 </BaseLayout>
