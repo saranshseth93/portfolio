@@ -17,18 +17,14 @@ export function applyTheme(name: string): void {
   const theme = isValid(name) ? name : DEFAULT;
   document.documentElement.dataset.theme = theme;
   localStorage.setItem(KEY, theme);
-  if (typeof document.querySelectorAll === "function") {
-    for (const btn of document.querySelectorAll<HTMLElement>("[data-theme-btn]")) {
-      btn.setAttribute("aria-pressed", String(btn.dataset.themeBtn === theme));
-    }
+  for (const btn of document.querySelectorAll<HTMLElement>("[data-theme-btn]")) {
+    btn.setAttribute("aria-pressed", String(btn.dataset.themeBtn === theme));
   }
 }
 
 export function initThemeSwitcher(): void {
   applyTheme(getStoredTheme());
-  if (typeof document.querySelectorAll === "function") {
-    for (const btn of document.querySelectorAll<HTMLElement>("[data-theme-btn]")) {
-      btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn ?? DEFAULT));
-    }
+  for (const btn of document.querySelectorAll<HTMLElement>("[data-theme-btn]")) {
+    btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn ?? DEFAULT));
   }
 }
