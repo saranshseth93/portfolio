@@ -173,7 +173,8 @@ html, body { overflow-x: clip; max-width: 100%; }
 /* Per-theme portrait treatment. Applied to .portrait-img only; never affects text. */
 [data-theme="midnight"] .portrait-img { filter: grayscale(1) contrast(1.08); }
 [data-theme="pixel"] .portrait-img { filter: url(#px-dither); image-rendering: pixelated; }
-[data-theme="blueprint"] .portrait-img { filter: url(#bp-edge); }
+/* Cyan duotone reads clearly against the drafting grid (the spec's alternative to edge-detect). */
+[data-theme="blueprint"] .portrait-img { filter: grayscale(1) brightness(1.05) sepia(1) hue-rotate(150deg) saturate(3.2); }
 
 /* Per-theme atmosphere across the whole hero. Decorative, behind content, never reduces text contrast. */
 .hero-atmosphere { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
