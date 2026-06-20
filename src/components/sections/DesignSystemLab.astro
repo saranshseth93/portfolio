@@ -1,0 +1,66 @@
+---
+const controls = [
+  { id: "hue", label: "Accent hue", min: 0, max: 360, value: 338, display: "338" },
+  { id: "radius", label: "Corner radius", min: 0, max: 22, value: 10, display: "10px" },
+  { id: "density", label: "Density", min: 80, max: 130, value: 100, display: "100%" },
+];
+---
+<section id="lab" class="chapter lab-chapter">
+  <div class="chapter-inner">
+    <h2 class="chapter-headline" data-lab-headline>A living system</h2>
+    <span class="chapter-rule" aria-hidden="true"></span>
+    <p class="chapter-lead">
+      Tokens are data. Move a control and every component below retheme at once, the way Phoenix
+      does across brands. No rebuild, no redeploy.
+    </p>
+
+    <div class="lab" data-lab>
+      <div class="lab-controls">
+        {controls.map((c) => (
+          <label class="lab-control">
+            <span class="lab-control-row">
+              <span class="lab-control-name">{c.label}</span>
+              <span class="lab-control-val" data-val={c.id}>{c.display}</span>
+            </span>
+            <input
+              class="lab-range"
+              type="range"
+              data-control={c.id}
+              min={c.min}
+              max={c.max}
+              value={c.value}
+              aria-label={c.label}
+            />
+          </label>
+        ))}
+        <button type="button" class="lab-reset" data-lab-reset>Reset tokens</button>
+      </div>
+
+      <div class="lab-preview" aria-label="Live component preview">
+        <article class="lab-card">
+          <header class="lab-card-head">
+            <span class="lab-badge">Design tokens</span>
+            <span class="lab-swatch" aria-hidden="true"></span>
+          </header>
+          <h3 class="lab-card-title">Component</h3>
+          <p class="lab-card-text">One source of truth, themed by data.</p>
+          <input class="lab-input" type="text" placeholder="you@example.com" aria-label="Sample input" />
+          <div class="lab-actions">
+            <button type="button" class="lab-btn">Primary</button>
+            <button type="button" class="lab-btn lab-btn--ghost">Ghost</button>
+          </div>
+          <ul class="lab-rows">
+            <li class="lab-row"><span>Status</span><span class="lab-pill">Active</span></li>
+            <li class="lab-row"><span>Distribution</span><span>3 teams</span></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // The lab is interactive functionality, so it runs regardless of motion preference.
+  import { initLab } from "../../scripts/ds-lab";
+  initLab();
+</script>

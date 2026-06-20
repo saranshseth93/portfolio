@@ -153,6 +153,37 @@ function initExperience(): void {
   }
 }
 
+// Design-system lab: a cinematic entrance (not pinned, so it never traps scroll while you
+// drag the controls). Headline rises, line draws, the panel lifts in.
+function initLabReveal(): void {
+  const section = document.querySelector<HTMLElement>("#lab");
+  if (!section) return;
+  const headline = section.querySelector<HTMLElement>("[data-lab-headline]");
+  const rule = section.querySelector<HTMLElement>(".chapter-rule");
+  const panel = section.querySelector<HTMLElement>(".lab");
+
+  if (headline) {
+    let words: Element[] = [headline];
+    try { words = new SplitText(headline, { type: "words", mask: "words" }).words; } catch { /* */ }
+    gsap.from(words, {
+      yPercent: 120, opacity: 0, stagger: 0.08, ease: "power4.out",
+      scrollTrigger: { trigger: headline, start: "top 84%", end: "top 48%", scrub: 0.6 },
+    });
+  }
+  if (rule) {
+    gsap.from(rule, {
+      scaleX: 0, transformOrigin: "left center", ease: "power2.out",
+      scrollTrigger: { trigger: rule, start: "top 88%", end: "top 60%", scrub: 0.6 },
+    });
+  }
+  if (panel) {
+    gsap.from(panel, {
+      y: 60, opacity: 0, filter: "blur(8px)", ease: "expo.out", duration: 1,
+      scrollTrigger: { trigger: panel, start: "top 82%" },
+    });
+  }
+}
+
 let registered = false;
 
 export function initScrollStage(): void {
@@ -175,6 +206,7 @@ export function initScrollStage(): void {
   initChapterReveals();
   initApproach();
   initExperience();
+  initLabReveal();
 
   ScrollTrigger.refresh();
 }
