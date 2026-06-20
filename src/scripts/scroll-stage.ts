@@ -123,37 +123,69 @@ function initApproach(): void {
   }
 }
 
-// Career story: the section title rises, then each role is a scene that reveals as it
-// enters, the company name flying up word by word, the points staggering in.
+// Career story: on desktop the roles scrub past as a pinned horizontal gallery; on mobile
+// they stack and reveal as each panel enters. Web-voice copy either way.
 function initCareer(): void {
   const section = document.querySelector<HTMLElement>("#experience");
-  if (!section) return;
+  const track = section?.querySelector<HTMLElement>(".career-track");
+  if (!section || !track) return;
+  const panels = gsap.utils.toArray<HTMLElement>(".career-panel");
 
-  const title = section.querySelector<HTMLElement>("[data-career-headline]");
-  if (title) {
-    let words: Element[] = [title];
-    try { words = new SplitText(title, { type: "words", mask: "words" }).words; } catch { /* */ }
-    gsap.from(words, {
-      yPercent: 120, opacity: 0, stagger: 0.08, ease: "power4.out",
-      scrollTrigger: { trigger: title, start: "top 82%", end: "top 45%", scrub: 0.6 },
-    });
-  }
+  const mm = gsap.matchMedia();
 
-  for (const scene of gsap.utils.toArray<HTMLElement>(".career-scene")) {
-    const company = scene.querySelector<HTMLElement>("[data-career-company]");
-    const meta = scene.querySelectorAll<HTMLElement>(".career-dates, .career-role");
-    const points = scene.querySelector<HTMLElement>("[data-career-points]");
-    const tl = gsap.timeline({
-      scrollTrigger: { trigger: scene, start: "top 78%" },
+  // Desktop: pin the section and translate the track horizontally as you scroll.
+  mm.add("(min-width: 768px)", () => {
+    track.classList.add("is-horizontal");
+    const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+    const tween = gsap.to(track, {
+      x: () => -distance(),
+      ease: "none",
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: () => "+=" + distance(),
+        scrub: 0.8,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
     });
-    if (company) {
-      let words: Element[] = [company];
-      try { words = new SplitText(company, { type: "words", mask: "words" }).words; } catch { /* */ }
-      tl.from(words, { yPercent: 120, rotate: 5, opacity: 0, stagger: 0.08, duration: 0.9, ease: "power4.out" });
+    // Each company name flies up as its panel scrubs into the centre.
+    for (const panel of panels) {
+      const company = panel.querySelector<HTMLElement>("[data-career-company]");
+      if (!company) continue;
+      gsap.from(company, {
+        yPercent: 60,
+        opacity: 0,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: panel,
+          containerAnimation: tween,
+          start: "left 70%",
+          end: "left 40%",
+          scrub: true,
+        },
+      });
     }
-    if (meta.length) tl.from(meta, { y: 24, opacity: 0, stagger: 0.08, duration: 0.6, ease: "power2.out" }, "-=0.5");
-    if (points) tl.from(points.children, { y: 40, opacity: 0, filter: "blur(6px)", stagger: 0.12, duration: 0.8, ease: "expo.out" }, "-=0.3");
-  }
+    return () => track.classList.remove("is-horizontal");
+  });
+
+  // Mobile: stacked panels, each revealing as it enters.
+  mm.add("(max-width: 767px)", () => {
+    for (const panel of panels) {
+      const inner = panel.querySelector<HTMLElement>(".career-panel-inner");
+      if (!inner) continue;
+      gsap.from(inner.children, {
+        y: 44,
+        opacity: 0,
+        filter: "blur(6px)",
+        stagger: 0.1,
+        duration: 0.9,
+        ease: "expo.out",
+        scrollTrigger: { trigger: panel, start: "top 80%" },
+      });
+    }
+  });
 }
 
 let registered = false;
