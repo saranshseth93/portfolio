@@ -1,8 +1,16 @@
 ---
-const controls = [
-  { id: "hue", label: "Accent hue", min: 0, max: 360, value: 338, display: "338" },
+const chips = [
+  { name: "Rose", value: "#E0316B" },
+  { name: "Amber", value: "#F5A524" },
+  { name: "Green", value: "#42D392" },
+  { name: "Cyan", value: "#3CC7F5" },
+  { name: "Violet", value: "#9B7CF6" },
+  { name: "Coral", value: "#FF7A66" },
+];
+const sliders = [
   { id: "radius", label: "Corner radius", min: 0, max: 22, value: 10, display: "10px" },
   { id: "density", label: "Density", min: 80, max: 130, value: 100, display: "100%" },
+  { id: "fontSize", label: "Font size", min: 85, max: 120, value: 100, display: "100%" },
 ];
 ---
 <section id="lab" class="chapter lab-chapter">
@@ -15,15 +23,32 @@ const controls = [
       lead one at Intrepid called Phoenix.
     </p>
     <p class="lab-explainer">
-      Here is a small one, running live. Drag a control and every component below updates at once,
-      because they all read from the same tokens. One change, everywhere, with no rebuild. That is
+      Here is a small one, running live. Change a token and every component below updates at once,
+      because they all read from the same source. One change, everywhere, with no rebuild. That is
       the work, and it is why teams move faster and stay on brand.
     </p>
 
     <div class="lab" data-lab>
       <div class="lab-controls">
-        <p class="lab-panel-label">Drag to retheme</p>
-        {controls.map((c) => (
+        <p class="lab-panel-label">Change the tokens</p>
+
+        <div class="lab-control">
+          <span class="lab-control-row"><span class="lab-control-name">Accent</span></span>
+          <div class="lab-chips" role="group" aria-label="Accent colour">
+            {chips.map((c, i) => (
+              <button
+                type="button"
+                class="lab-chip"
+                data-chip={c.value}
+                style={`--chip:${c.value}`}
+                aria-pressed={i === 0 ? "true" : "false"}
+                aria-label={c.name}
+              ></button>
+            ))}
+          </div>
+        </div>
+
+        {sliders.map((c) => (
           <label class="lab-control">
             <span class="lab-control-row">
               <span class="lab-control-name">{c.label}</span>
@@ -40,6 +65,7 @@ const controls = [
             />
           </label>
         ))}
+
         <button type="button" class="lab-reset" data-lab-reset>Reset tokens</button>
       </div>
 
@@ -48,28 +74,28 @@ const controls = [
         <article class="lab-card">
           <header class="lab-card-head">
             <span class="lab-anno">
-              <span class="lab-badge">Featured</span>
+              <span class="lab-badge">Popular</span>
               <span class="lab-anno-tag">badge</span>
             </span>
-            <span class="lab-price">$2,480</span>
+            <span class="lab-price">$12<span class="lab-price-unit"> / mo</span></span>
           </header>
-          <h3 class="lab-card-title">Patagonia Explorer</h3>
-          <p class="lab-card-text">15 days, small group, from Santiago.</p>
+          <h3 class="lab-card-title">Starter plan</h3>
+          <p class="lab-card-text">Everything a small team needs to get going.</p>
           <div class="lab-anno">
             <input class="lab-input" type="text" placeholder="Promo code" aria-label="Promo code" />
             <span class="lab-anno-tag">input</span>
           </div>
           <div class="lab-anno">
             <div class="lab-actions">
-              <button type="button" class="lab-btn">Book now</button>
-              <button type="button" class="lab-btn lab-btn--ghost">Details</button>
+              <button type="button" class="lab-btn">Choose plan</button>
+              <button type="button" class="lab-btn lab-btn--ghost">Compare</button>
             </div>
             <span class="lab-anno-tag">buttons</span>
           </div>
           <div class="lab-anno">
             <ul class="lab-rows">
-              <li class="lab-row"><span>Availability</span><span class="lab-pill">Open</span></li>
-              <li class="lab-row"><span>Rating</span><span>4.9</span></li>
+              <li class="lab-row"><span>Seats</span><span class="lab-pill">5</span></li>
+              <li class="lab-row"><span>Storage</span><span>100 GB</span></li>
             </ul>
             <span class="lab-anno-tag">data rows</span>
           </div>
