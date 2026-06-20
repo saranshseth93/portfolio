@@ -10,12 +10,19 @@ const controls = [
     <h2 class="chapter-headline" data-lab-headline>A living system</h2>
     <span class="chapter-rule" aria-hidden="true"></span>
     <p class="chapter-lead">
-      Tokens are data. Move a control and every component below retheme at once, the way Phoenix
-      does across brands. No rebuild, no redeploy.
+      A design system is the shared kit a team builds its product from: the colours, type,
+      spacing, and components, with the rules that keep them consistent across every screen. I
+      lead one at Intrepid called Phoenix.
+    </p>
+    <p class="lab-explainer">
+      Here is a small one, running live. Drag a control and every component below updates at once,
+      because they all read from the same tokens. One change, everywhere, with no rebuild. That is
+      the work, and it is why teams move faster and stay on brand.
     </p>
 
     <div class="lab" data-lab>
       <div class="lab-controls">
+        <p class="lab-panel-label">Drag to retheme</p>
         {controls.map((c) => (
           <label class="lab-control">
             <span class="lab-control-row">
@@ -37,6 +44,7 @@ const controls = [
       </div>
 
       <div class="lab-preview" aria-label="Live component preview">
+        <p class="lab-panel-label">Live preview</p>
         <article class="lab-card">
           <header class="lab-card-head">
             <span class="lab-badge">Design tokens</span>

@@ -394,6 +394,21 @@ html, body { overflow-x: clip; max-width: 100%; }
 .exp-line { max-width: 68ch; color: var(--color-text); font-size: clamp(1rem, 1.3vw, 1.15rem); line-height: 1.5; }
 
 /* ---- Design-system lab ---- */
+.lab-explainer {
+  margin-top: 1.25rem;
+  max-width: 60ch;
+  color: var(--color-text-muted);
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.6;
+}
+.lab-panel-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
 .lab {
   --lab-accent: oklch(0.72 0.17 338);
   --lab-accent-soft: oklch(0.72 0.17 338 / 0.18);
