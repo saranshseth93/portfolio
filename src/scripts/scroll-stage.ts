@@ -191,17 +191,30 @@ function initCredibility(): void {
   const statement = section.querySelector<HTMLElement>("[data-cred-statement]");
   const stack = section.querySelector<HTMLElement>("[data-cred-stack]");
   if (statement) {
-    // Animate the paragraph as a block (no SplitText: its auto aria-label is invalid on a <p>).
-    gsap.from(statement, {
-      y: 44, opacity: 0, filter: "blur(8px)", ease: "power3.out",
-      scrollTrigger: { trigger: statement, start: "top 82%", end: "top 48%", scrub: 0.6 },
+    // Letters reveal in random order as you scroll. The <p> is aria-hidden with a plain
+    // sr-only copy beside it, so screen readers never see the split characters.
+    let chars: Element[] = [statement];
+    try {
+      const split = new SplitText(statement, { type: "words,chars", aria: "none" });
+      statement.removeAttribute("aria-label");
+      chars = split.chars;
+    } catch { /* */ }
+    gsap.from(chars, {
+      opacity: 0, yPercent: 50, filter: "blur(4px)",
+      ease: "power2.out",
+      stagger: { each: 0.015, from: "random" },
+      scrollTrigger: { trigger: statement, start: "top 85%", end: "top 38%", scrub: 0.5 },
     });
   }
   if (stack) {
-    gsap.from(stack.children, {
+    const tags = Array.from(stack.children) as HTMLElement[];
+    gsap.from(tags, {
       y: 24, opacity: 0, stagger: 0.05, ease: "power2.out",
       scrollTrigger: { trigger: stack, start: "top 88%" },
     });
+    // Give a few random chips a glow beneath them.
+    const picks = [...tags].sort(() => Math.random() - 0.5).slice(0, 3);
+    for (const t of picks) t.classList.add("cred-tag--glow");
   }
 }
 

@@ -5,13 +5,17 @@ const stack = [
   "MCP servers",
 ];
 ---
-<section id="credibility" class="chapter">
+<section id="credibility" class="chapter chapter--flow">
   <div class="chapter-inner">
-    <p class="cred-statement" data-cred-statement>
+    <p class="cred-statement" data-cred-statement aria-hidden="true">
       Eight years. A design system of <em>60+</em> components across <em>three</em> product teams.
       <em>Two</em> hackathon wins, both shipped to production. Performance and accessibility held to
       budget, every release.
     </p>
+    <span class="sr-only">
+      Eight years. A design system of 60+ components across three product teams. Two hackathon wins,
+      both shipped to production. Performance and accessibility held to budget, every release.
+    </span>
     <ul class="cred-stack" data-cred-stack>
       {stack.map((s) => <li class="cred-tag">{s}</li>)}
     </ul>
