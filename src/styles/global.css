@@ -35,6 +35,7 @@
   --color-accent: #AD2B63;
   --color-accent-2: #C9A227;
   --color-focus: #C9A227;
+  --color-on-accent: #EDEAE3;
 
   --font-display: "Hanken Grotesk", system-ui, sans-serif;
   --font-body: "Hanken Grotesk", system-ui, sans-serif;
@@ -49,6 +50,7 @@
   --color-accent: #5CE65C;
   --color-accent-2: #FFB000;
   --color-focus: #FFB000;
+  --color-on-accent: #0B0E0A;
   --font-display: "Pixelify Sans", ui-monospace, monospace;
   --font-body: "JetBrains Mono", ui-monospace, monospace;
 }
@@ -62,6 +64,7 @@
   --color-accent: #4FC3F7;
   --color-accent-2: #A7D8FF;
   --color-focus: #4FC3F7;
+  --color-on-accent: #0A1830;
   --font-display: "JetBrains Mono", ui-monospace, monospace;
   --font-body: "JetBrains Mono", ui-monospace, monospace;
 }
@@ -161,7 +164,7 @@ html, body { overflow-x: clip; max-width: 100%; }
   font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--color-bg);
+  color: var(--color-on-accent);
   background: var(--color-accent);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
 }

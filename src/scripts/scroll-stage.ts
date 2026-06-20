@@ -191,11 +191,10 @@ function initCredibility(): void {
   const statement = section.querySelector<HTMLElement>("[data-cred-statement]");
   const stack = section.querySelector<HTMLElement>("[data-cred-stack]");
   if (statement) {
-    let lines: Element[] = [statement];
-    try { lines = new SplitText(statement, { type: "lines", mask: "lines" }).lines; } catch { /* */ }
-    gsap.from(lines, {
-      yPercent: 110, opacity: 0, stagger: 0.12, ease: "power3.out",
-      scrollTrigger: { trigger: statement, start: "top 82%", end: "bottom 55%", scrub: 0.6 },
+    // Animate the paragraph as a block (no SplitText: its auto aria-label is invalid on a <p>).
+    gsap.from(statement, {
+      y: 44, opacity: 0, filter: "blur(8px)", ease: "power3.out",
+      scrollTrigger: { trigger: statement, start: "top 82%", end: "top 48%", scrub: 0.6 },
     });
   }
   if (stack) {
