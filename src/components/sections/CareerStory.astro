@@ -1,48 +1,41 @@
 ---
-// Website voice, not resume bullets. The proof is woven into the sentences.
+// Concise website voice, one strong line per role with the proof inside it.
 const roles = [
   {
     dates: "2024 to now",
-    company: "Intrepid Travel",
     role: "Senior Engineer, Acting Tech Lead, Design Systems",
-    lead: "I own Phoenix, Intrepid's design system. Sixty plus Vue and TypeScript components, three product teams, one source of truth.",
-    body: "Right now I am rebuilding it as a layered, white-label system any brand can theme, piping tokens straight from Figma into code, and building an MCP server so AI assistants ship on-brand Phoenix code on their own. Two internal hackathon wins along the way, both in production.",
+    company: "Intrepid Travel",
+    line: "I own Phoenix, Intrepid's design system: 60+ components across three teams, now going layered and white-label with a Figma token pipeline and an MCP server that lets AI ship on-brand code.",
   },
   {
     dates: "2022 to 2024",
-    company: "AmazingCo",
     role: "Full Stack Developer",
-    lead: "I owned the storefront end to end: subscriptions, checkout, scheduling, gifting.",
-    body: "Five payment methods, with analytics and error tracking through every flow. Engagement up a third, checkout up a quarter, organic traffic up a fifth, performance held to budget the whole way.",
+    company: "AmazingCo",
+    line: "Owned the storefront end to end. Five payment methods, engagement up a third, checkout up a quarter, organic traffic up a fifth.",
   },
   {
     dates: "2017 to 2022",
-    company: "Nookal",
     role: "Frontend Web Developer",
-    lead: "Where it started.",
-    body: "I moved the frontend from vanilla JavaScript to React, then spent four years building a component library with our designer. Those early token conventions are why I build systems the way I do now.",
+    company: "Nookal",
+    line: "Took the frontend from vanilla JavaScript to React and built the component library that started my design-systems path.",
   },
 ];
 ---
-<section id="experience" class="career">
-  <div class="career-head chapter-inner">
-    <h2 class="chapter-headline" data-career-headline>Experience</h2>
+<section id="experience" class="chapter">
+  <div class="chapter-inner">
+    <h2 class="chapter-headline" data-exp-headline>Experience</h2>
     <span class="chapter-rule" aria-hidden="true"></span>
-    <p class="career-lead">Eight years, from a first React migration to leading a design system.</p>
+    <ol class="exp-list">
+      {roles.map((r) => (
+        <li class="exp-item">
+          <p class="exp-meta"><span class="exp-dates">{r.dates}</span>{r.role}</p>
+          <h3 class="exp-company">{r.company}</h3>
+          <p class="exp-line">{r.line}</p>
+        </li>
+      ))}
+    </ol>
+
+    <!-- Projects slot. Add one or two real projects here when SafeSure / Parichay ship.
+         Keep the same row rhythm as the roles above. Do not populate now. -->
   </div>
-
-  {roles.map((r) => (
-    <article class="career-role-block">
-      <div class="career-panel-inner">
-        <p class="career-dates">{r.dates}</p>
-        <h3 class="career-company" data-career-company>{r.company}</h3>
-        <p class="career-role">{r.role}</p>
-        <p class="career-lead">{r.lead}</p>
-        <p class="career-body">{r.body}</p>
-      </div>
-    </article>
-  ))}
-
-  <!-- Projects slot. Add one or two real projects here when SafeSure / Parichay ship.
-       Keep the same block rhythm as the roles above. Do not populate now. -->
 </section>

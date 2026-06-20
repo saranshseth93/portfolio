@@ -123,39 +123,33 @@ function initApproach(): void {
   }
 }
 
-// Career story: vertical scrubbed reveals, the same reversible language as Approach.
-// The title rises, then each role's company name flies up and its copy de-blurs as it enters.
-function initCareer(): void {
+// Experience: the same pinned, scrubbed sequence as Approach. Headline words fly up, the
+// accent line draws, then each role reveals in turn. Pinned so it holds while it plays.
+function initExperience(): void {
   const section = document.querySelector<HTMLElement>("#experience");
   if (!section) return;
+  const headline = section.querySelector<HTMLElement>("[data-exp-headline]");
+  const rule = section.querySelector<HTMLElement>(".chapter-rule");
+  const items = section.querySelectorAll<HTMLElement>(".exp-item");
+  if (!headline) return;
 
-  const title = section.querySelector<HTMLElement>("[data-career-headline]");
-  if (title) {
-    let words: Element[] = [title];
-    try { words = new SplitText(title, { type: "words", mask: "words" }).words; } catch { /* */ }
-    gsap.from(words, {
-      yPercent: 120, opacity: 0, stagger: 0.08, ease: "power4.out",
-      scrollTrigger: { trigger: title, start: "top 85%", end: "top 50%", scrub: 0.6 },
-    });
-  }
+  let words: Element[] = [headline];
+  try { words = new SplitText(headline, { type: "words", mask: "words" }).words; } catch { /* */ }
 
-  for (const block of gsap.utils.toArray<HTMLElement>(".career-role-block")) {
-    const company = block.querySelector<HTMLElement>("[data-career-company]");
-    const copy = block.querySelectorAll<HTMLElement>(".career-dates, .career-role, .career-lead, .career-body");
-    if (company) {
-      let words: Element[] = [company];
-      try { words = new SplitText(company, { type: "words", mask: "words" }).words; } catch { /* */ }
-      gsap.from(words, {
-        yPercent: 120, rotate: 5, opacity: 0, stagger: 0.08, ease: "power4.out",
-        scrollTrigger: { trigger: block, start: "top 80%", end: "top 45%", scrub: 0.6 },
-      });
-    }
-    if (copy.length) {
-      gsap.from(copy, {
-        y: 40, opacity: 0, filter: "blur(6px)", stagger: 0.1, ease: "power3.out",
-        scrollTrigger: { trigger: block, start: "top 72%", end: "top 40%", scrub: 0.6 },
-      });
-    }
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: "top top",
+      end: "+=130%",
+      scrub: 0.8,
+      pin: true,
+      anticipatePin: 1,
+    },
+  });
+  tl.from(words, { yPercent: 130, rotate: 7, opacity: 0, stagger: 0.09, ease: "power4.out" });
+  if (rule) tl.from(rule, { scaleX: 0, transformOrigin: "left center", ease: "power2.inOut" }, "-=0.15");
+  if (items.length) {
+    tl.from(items, { y: 70, opacity: 0, filter: "blur(8px)", stagger: 0.14, ease: "expo.out" }, "-=0.05");
   }
 }
 
@@ -180,7 +174,7 @@ export function initScrollStage(): void {
   initHeroParallax();
   initChapterReveals();
   initApproach();
-  initCareer();
+  initExperience();
 
   ScrollTrigger.refresh();
 }
