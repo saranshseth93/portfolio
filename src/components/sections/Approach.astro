@@ -1,0 +1,25 @@
+---
+const principles = [
+  { k: "Tokens", t: "Token-driven architecture. One source of truth, themes as data, components that recolour without a rebuild." },
+  { k: "Performance", t: "Performance is a feature. Tight budgets, measured every build, because speed is part of the design." },
+  { k: "Accessibility", t: "Accessible by default. Contrast, keyboard paths, and motion preferences, never bolted on at the end." },
+  { k: "Tooling", t: "Tooling that compounds. Figma to code pipelines and AI assistants that surface the system where people work." },
+];
+---
+<section id="approach" class="chapter">
+  <div class="chapter-inner">
+    <h2 class="chapter-headline" data-split>How I work</h2>
+    <p class="chapter-lead">
+      I lead design systems that hold up across teams and brands, and I treat the system itself
+      as the product: the page you are reading is one.
+    </p>
+    <ul class="principles" data-stagger>
+      {principles.map((p) => (
+        <li class="principle">
+          <span class="principle-k">{p.k}</span>
+          <span class="principle-t">{p.t}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
