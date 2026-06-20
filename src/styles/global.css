@@ -145,6 +145,25 @@ html, body { overflow-x: clip; max-width: 100%; }
 .hero-tagline { margin-top: 1.25rem; max-width: 40ch; color: var(--color-text-muted); font-size: 1rem; }
 @media (min-width: 640px) { .hero-tagline { font-size: 1.125rem; } }
 
+.hero-actions { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.cv-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.15rem;
+  border-radius: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-bg);
+  background: var(--color-accent);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+.cv-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -8px color-mix(in oklab, var(--color-accent) 70%, transparent);
+}
+
 /* Portrait: the star. Height-driven so it stays bounded, bleeding toward the edge on wide screens.
    The mask dissolves the bottom and edges so the bust emerges from the page instead of reading
    as a pasted cut-out. Applied to the container so the image and the WebGL canvas fade together. */

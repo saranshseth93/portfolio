@@ -8,6 +8,7 @@ import BootSequence from "./BootSequence.astro";
 import ThemeSwitcher from "./ThemeSwitcher.astro";
 // Cutout aspect ratio from source 1792x2390. W=480 H=640 preserves the 3:4 ratio.
 const W = 480, H = 640;
+const cv = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/resume.pdf`;
 ---
 <section id="hero" class="hero">
   <!-- Per-theme atmosphere washing across the whole first screen. Decorative. -->
@@ -22,6 +23,12 @@ const W = 480, H = 640;
       <BootSequence />
       <h1 class="hero-name">Saransh Seth</h1>
       <p class="hero-tagline">Senior Frontend Engineer &middot; Design Systems Tech Lead &middot; Melbourne</p>
+      <div class="hero-actions">
+        <a class="cv-button" href={cv} download>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download CV
+        </a>
+      </div>
     </div>
 
     <div class="hero-portrait" data-hero-portrait>
@@ -44,7 +51,7 @@ const W = 480, H = 640;
     </div>
   </div>
 
-  <a class="hero-scroll" href="#currently" aria-label="Scroll to the rest of the page">
+  <a class="hero-scroll" href="#approach" aria-label="Scroll to the rest of the page">
     <span>scroll</span>
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
   </a>
