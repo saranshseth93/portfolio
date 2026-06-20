@@ -25,30 +25,24 @@ const roles = [
 ];
 ---
 <section id="experience" class="career">
-  <div class="career-pin">
-    <div class="career-track">
-      <article class="career-panel career-title">
-        <div class="career-panel-inner">
-          <h2 class="chapter-headline" data-career-headline>Experience</h2>
-          <span class="chapter-rule" aria-hidden="true"></span>
-          <p class="career-lead">Eight years, from a first React migration to leading a design system.</p>
-        </div>
-      </article>
-
-      {roles.map((r) => (
-        <article class="career-panel">
-          <div class="career-panel-inner">
-            <p class="career-dates">{r.dates}</p>
-            <h3 class="career-company" data-career-company>{r.company}</h3>
-            <p class="career-role">{r.role}</p>
-            <p class="career-lead">{r.lead}</p>
-            <p class="career-body">{r.body}</p>
-          </div>
-        </article>
-      ))}
-    </div>
-
-    <!-- Projects slot. Add one or two real projects here when SafeSure / Parichay ship.
-         Keep the same panel rhythm as the roles above. Do not populate now. -->
+  <div class="career-head chapter-inner">
+    <h2 class="chapter-headline" data-career-headline>Experience</h2>
+    <span class="chapter-rule" aria-hidden="true"></span>
+    <p class="career-lead">Eight years, from a first React migration to leading a design system.</p>
   </div>
+
+  {roles.map((r) => (
+    <article class="career-role-block">
+      <div class="career-panel-inner">
+        <p class="career-dates">{r.dates}</p>
+        <h3 class="career-company" data-career-company>{r.company}</h3>
+        <p class="career-role">{r.role}</p>
+        <p class="career-lead">{r.lead}</p>
+        <p class="career-body">{r.body}</p>
+      </div>
+    </article>
+  ))}
+
+  <!-- Projects slot. Add one or two real projects here when SafeSure / Parichay ship.
+       Keep the same block rhythm as the roles above. Do not populate now. -->
 </section>
