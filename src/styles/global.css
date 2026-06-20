@@ -19,6 +19,12 @@
   font-weight: 400 700;
   font-display: swap;
 }
+@font-face {
+  font-family: "Caveat";
+  src: url("../assets/fonts/caveat-var.woff2") format("woff2");
+  font-weight: 500 700;
+  font-display: swap;
+}
 
 /* Default theme: Midnight. These generate the semantic utilities. */
 @theme {
@@ -450,7 +456,36 @@ html, body { overflow-x: clip; max-width: 100%; }
   font-family: var(--font-display); letter-spacing: 0.04em;
 }
 .lab-swatch { width: 1.6rem; height: 1.6rem; border-radius: calc(var(--lab-radius) * 0.6); background: var(--lab-accent); }
+.lab-price { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--color-text); }
 .lab-card-title { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: var(--color-text); }
+
+/* Handwritten annotation callouts: each labels a reusable component, with a small hook
+   connector. Anchored beside its component so they never drift when the controls resize it. */
+.lab-anno { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 0.85rem; }
+.lab-anno-tag {
+  position: relative;
+  padding-left: 1.15rem;
+  font-family: "Caveat", cursive;
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--lab-accent);
+  white-space: nowrap;
+  transform: rotate(-3deg);
+  transform-origin: left center;
+}
+.lab-anno-tag::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-left: 1.5px solid var(--lab-accent);
+  border-bottom: 1.5px solid var(--lab-accent);
+  border-bottom-left-radius: 7px;
+  transform: translateY(-65%);
+}
 .lab-card-text { color: var(--color-text-muted); }
 .lab-input {
   width: 100%; background: var(--color-bg); color: var(--color-text);

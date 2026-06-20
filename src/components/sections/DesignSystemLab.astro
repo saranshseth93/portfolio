@@ -44,23 +44,35 @@ const controls = [
       </div>
 
       <div class="lab-preview" aria-label="Live component preview">
-        <p class="lab-panel-label">Live preview</p>
+        <p class="lab-panel-label">Live preview, one real component</p>
         <article class="lab-card">
           <header class="lab-card-head">
-            <span class="lab-badge">Design tokens</span>
-            <span class="lab-swatch" aria-hidden="true"></span>
+            <span class="lab-anno">
+              <span class="lab-badge">Featured</span>
+              <span class="lab-anno-tag">badge</span>
+            </span>
+            <span class="lab-price">$2,480</span>
           </header>
-          <h3 class="lab-card-title">Component</h3>
-          <p class="lab-card-text">One source of truth, themed by data.</p>
-          <input class="lab-input" type="text" placeholder="you@example.com" aria-label="Sample input" />
-          <div class="lab-actions">
-            <button type="button" class="lab-btn">Primary</button>
-            <button type="button" class="lab-btn lab-btn--ghost">Ghost</button>
+          <h3 class="lab-card-title">Patagonia Explorer</h3>
+          <p class="lab-card-text">15 days, small group, from Santiago.</p>
+          <div class="lab-anno">
+            <input class="lab-input" type="text" placeholder="Promo code" aria-label="Promo code" />
+            <span class="lab-anno-tag">input</span>
           </div>
-          <ul class="lab-rows">
-            <li class="lab-row"><span>Status</span><span class="lab-pill">Active</span></li>
-            <li class="lab-row"><span>Distribution</span><span>3 teams</span></li>
-          </ul>
+          <div class="lab-anno">
+            <div class="lab-actions">
+              <button type="button" class="lab-btn">Book now</button>
+              <button type="button" class="lab-btn lab-btn--ghost">Details</button>
+            </div>
+            <span class="lab-anno-tag">buttons</span>
+          </div>
+          <div class="lab-anno">
+            <ul class="lab-rows">
+              <li class="lab-row"><span>Availability</span><span class="lab-pill">Open</span></li>
+              <li class="lab-row"><span>Rating</span><span>4.9</span></li>
+            </ul>
+            <span class="lab-anno-tag">data rows</span>
+          </div>
         </article>
       </div>
     </div>
