@@ -6,14 +6,15 @@ const principles = [
   { k: "Tooling", t: "Tooling that compounds. Figma to code pipelines and AI assistants that surface the system where people work." },
 ];
 ---
-<section id="approach" class="chapter">
+<section id="approach" class="chapter approach">
   <div class="chapter-inner">
-    <h2 class="chapter-headline" data-split>How I work</h2>
+    <h2 class="chapter-headline approach-headline">How I work</h2>
+    <span class="chapter-rule" aria-hidden="true"></span>
     <p class="chapter-lead">
       I lead design systems that hold up across teams and brands, and I treat the system itself
       as the product: the page you are reading is one.
     </p>
-    <ul class="principles" data-stagger>
+    <ul class="principles">
       {principles.map((p) => (
         <li class="principle">
           <span class="principle-k">{p.k}</span>

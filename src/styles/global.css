@@ -297,15 +297,22 @@ html, body { overflow-x: clip; max-width: 100%; }
 .chapter-inner { width: 100%; max-width: 76rem; margin-inline: auto; }
 .chapter-headline {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  line-height: 1;
+  font-weight: 700;
+  font-size: clamp(3rem, 9vw, 6rem);
+  line-height: 0.98;
   letter-spacing: -0.03em;
   color: var(--color-text);
   text-wrap: balance;
 }
+.chapter-rule {
+  display: block;
+  height: 2px;
+  width: min(100%, 40rem);
+  margin-top: 1.75rem;
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+}
 .chapter-lead {
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
   max-width: 46ch;
   font-size: clamp(1.05rem, 1.6vw, 1.4rem);
   line-height: 1.5;

@@ -87,6 +87,42 @@ function initChapterReveals(): void {
   }
 }
 
+// Approach: a pinned, scrubbed cinematic sequence. The headline words fly up with a
+// touch of rotation, an accent line draws across, then the principles reveal in turn.
+function initApproach(): void {
+  const section = document.querySelector<HTMLElement>("#approach");
+  if (!section) return;
+  const headline = section.querySelector<HTMLElement>(".approach-headline");
+  const lead = section.querySelector<HTMLElement>(".chapter-lead");
+  const rule = section.querySelector<HTMLElement>(".chapter-rule");
+  const principles = section.querySelectorAll<HTMLElement>(".principle");
+  if (!headline) return;
+
+  let words: Element[] = [headline];
+  try {
+    words = new SplitText(headline, { type: "words", mask: "words" }).words;
+  } catch {
+    /* SplitText unavailable: animate the whole headline */
+  }
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: "top top",
+      end: "+=130%",
+      scrub: 0.8,
+      pin: true,
+      anticipatePin: 1,
+    },
+  });
+  tl.from(words, { yPercent: 130, rotate: 7, opacity: 0, stagger: 0.09, ease: "power4.out" });
+  if (lead) tl.from(lead, { y: 48, opacity: 0, ease: "power2.out" }, "-=0.25");
+  if (rule) tl.from(rule, { scaleX: 0, transformOrigin: "left center", ease: "power2.inOut" }, "-=0.15");
+  if (principles.length) {
+    tl.from(principles, { y: 70, opacity: 0, filter: "blur(8px)", stagger: 0.12, ease: "expo.out" }, "-=0.05");
+  }
+}
+
 let registered = false;
 
 export function initScrollStage(): void {
@@ -107,6 +143,7 @@ export function initScrollStage(): void {
   initReveals();
   initHeroParallax();
   initChapterReveals();
+  initApproach();
 
   ScrollTrigger.refresh();
 }
