@@ -2,13 +2,12 @@ import vertSrc from "./shaders/reveal.vert?raw";
 import fragSrc from "./shaders/reveal.frag?raw";
 import texAsset from "../assets/portrait/cutout.png";
 
-// Pure, testable gate for the cursor-reveal shader.
-export function shouldEnableShader(env: {
-  reducedMotion: boolean;
-  finePointer: boolean;
-  hasWebGL: boolean;
-}): boolean {
-  return !env.reducedMotion && env.finePointer && env.hasWebGL;
+// The reveal is ambient: it drifts across the portrait on its own so every device
+// (phones included) sees the effect, and follows the pointer or a dragging finger
+// when the visitor takes over. Enabled wherever WebGL is available and motion is
+// allowed; reduced-motion users get the static themed image instead.
+export function shouldEnableShader(env: { reducedMotion: boolean; hasWebGL: boolean }): boolean {
+  return !env.reducedMotion && env.hasWebGL;
 }
 
 const THEME_INDEX: Record<string, number> = { midnight: 0, pixel: 1, blueprint: 2 };
@@ -29,21 +28,20 @@ export function initHeroShader(): void {
   if (!host || !img) return;
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const finePointer = window.matchMedia("(pointer: fine)").matches;
   const probe = document.createElement("canvas");
   const hasWebGL = !!(probe.getContext("webgl") || probe.getContext("experimental-webgl"));
-  if (!shouldEnableShader({ reducedMotion, finePointer, hasWebGL })) return;
+  if (!shouldEnableShader({ reducedMotion, hasWebGL })) return;
 
   const canvas = document.createElement("canvas");
   canvas.className = "portrait-canvas";
   canvas.setAttribute("aria-hidden", "true");
-  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  // Cap resolution; touch devices (usually higher DPR, weaker GPU) get 1x.
+  const coarse = window.matchMedia("(pointer: coarse)").matches;
+  const dpr = Math.min(window.devicePixelRatio || 1, coarse ? 1 : 1.5);
 
   const gl = canvas.getContext("webgl", { premultipliedAlpha: true, alpha: true });
   if (!gl) return;
 
-  // Build the program. On any compile or link failure, bail before hiding the
-  // image so the static CSS-treated portrait stays as the fallback.
   let program: WebGLProgram;
   try {
     program = gl.createProgram()!;
@@ -67,6 +65,7 @@ export function initHeroShader(): void {
   const uRadius = gl.getUniformLocation(program, "u_radius");
   const uTheme = gl.getUniformLocation(program, "u_theme");
   const uRes = gl.getUniformLocation(program, "u_res");
+  const uTime = gl.getUniformLocation(program, "u_time");
 
   const sizeCanvas = () => {
     const rect = host.getBoundingClientRect();
@@ -76,26 +75,73 @@ export function initHeroShader(): void {
     canvas.style.height = `${rect.height}px`;
   };
 
-  let mouse = { x: -1, y: -1 };
-  let raf = 0;
+  // Reveal centre: lerps toward an ambient orbit, or toward the pointer when active.
+  const pointer = { x: 0.5, y: 0.42 };
+  const current = { x: 0.5, y: 0.42 };
+  let lastInteract = -10000;
   let visible = true;
   let ready = false;
+  let running = false;
 
-  const render = () => {
-    raf = 0;
-    if (!visible || document.hidden || !ready) return;
+  const render = (timeMs: number) => {
+    const t = timeMs / 1000;
+    const idle = timeMs - lastInteract > 1600;
+    const target = idle
+      ? { x: 0.5 + 0.24 * Math.sin(t * 0.45), y: 0.42 + 0.18 * Math.sin(t * 0.72 + 1.3) }
+      : pointer;
+    current.x += (target.x - current.x) * 0.08;
+    current.y += (target.y - current.y) * 0.08;
+
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.uniform2f(uMouse, mouse.x, mouse.y);
-    gl.uniform1f(uRadius, 0.32);
+    gl.uniform2f(uMouse, current.x, current.y);
+    gl.uniform1f(uRadius, idle ? 0.34 : 0.3);
     gl.uniform1i(uTheme, THEME_INDEX[document.documentElement.dataset.theme ?? "midnight"] ?? 0);
     gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.uniform1f(uTime, t);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   };
-  const requestRender = () => {
-    if (!raf) raf = requestAnimationFrame(render);
+
+  // Throttle to ~30fps: plenty for a slow ambient drift, and half the GPU work.
+  let lastDraw = 0;
+  const frame = (time: number) => {
+    if (!visible || document.hidden || !ready) {
+      running = false;
+      return;
+    }
+    if (time - lastDraw >= 33) {
+      render(time);
+      lastDraw = time;
+    }
+    requestAnimationFrame(frame);
   };
+  const ensureRunning = () => {
+    if (!running && visible && !document.hidden && ready) {
+      running = true;
+      requestAnimationFrame(frame);
+    }
+  };
+
+  const setPointer = (event: PointerEvent) => {
+    const rect = host.getBoundingClientRect();
+    pointer.x = (event.clientX - rect.left) / rect.width;
+    pointer.y = (event.clientY - rect.top) / rect.height;
+    lastInteract = performance.now();
+  };
+  host.addEventListener("pointermove", setPointer);
+  host.addEventListener("pointerdown", setPointer);
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) ensureRunning();
+  });
+  window.addEventListener("resize", () => {
+    if (ready) sizeCanvas();
+  });
+  new IntersectionObserver((entries) => {
+    visible = entries[0].isIntersecting;
+    ensureRunning();
+  }).observe(host);
 
   const texImage = new Image();
   texImage.decoding = "async";
@@ -112,32 +158,6 @@ export function initHeroShader(): void {
     ready = true;
     img.style.visibility = "hidden";
     host.appendChild(canvas);
-    requestRender();
+    ensureRunning();
   };
-
-  host.addEventListener("pointermove", (event) => {
-    const rect = host.getBoundingClientRect();
-    mouse = { x: (event.clientX - rect.left) / rect.width, y: (event.clientY - rect.top) / rect.height };
-    requestRender();
-  });
-  host.addEventListener("pointerleave", () => {
-    mouse = { x: -1, y: -1 };
-    requestRender();
-  });
-  document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) requestRender();
-  });
-  window.addEventListener("resize", () => {
-    if (ready) sizeCanvas();
-    requestRender();
-  });
-  new IntersectionObserver((entries) => {
-    visible = entries[0].isIntersecting;
-    if (visible) requestRender();
-  }).observe(host);
-  // Re-render when the theme flips so the in-shader treatment updates.
-  new MutationObserver(requestRender).observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["data-theme"],
-  });
 }

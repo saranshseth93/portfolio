@@ -51,11 +51,22 @@ const W = 480, H = 640;
 </section>
 
 <script>
-  // Init the cursor-reveal shader on first hover of the portrait, so it costs nothing
-  // at load (zero TBT) and only spins up WebGL when a pointer user actually engages.
+  // The reveal is ambient, so init once the portrait is on screen (every device, not just
+  // pointer ones). Deferred to idle after first paint so it never competes with LCP.
   import { initHeroShader } from "../scripts/hero-shader";
   const host = document.querySelector("[data-hero-portrait]");
   if (host) {
-    host.addEventListener("pointerenter", () => initHeroShader(), { once: true });
+    const start = () => {
+      if ("requestIdleCallback" in window) requestIdleCallback(() => initHeroShader(), { timeout: 1500 });
+      else setTimeout(() => initHeroShader(), 300);
+    };
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) { io.disconnect(); start(); }
+      });
+      io.observe(host);
+    } else {
+      start();
+    }
   }
 </script>
