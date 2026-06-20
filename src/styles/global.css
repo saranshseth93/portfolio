@@ -501,6 +501,11 @@ html, body { overflow-x: clip; max-width: 100%; }
   border-bottom-left-radius: 7px;
   transform: translateY(-65%);
 }
+/* On small screens drop the right-gutter callouts so the card never clips. */
+@media (max-width: 767px) {
+  .lab-anno { grid-template-columns: 1fr; }
+  .lab-anno-tag { display: none; }
+}
 .lab-card-text { color: var(--color-text-muted); font-size: calc(1rem * var(--lab-font)); }
 .lab-input {
   width: 100%; background: var(--color-bg); color: var(--color-text);
