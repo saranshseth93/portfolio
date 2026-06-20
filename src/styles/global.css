@@ -193,17 +193,33 @@ html, body { overflow-x: clip; max-width: 100%; }
 }
 [data-theme="pixel"] .hero-atmosphere {
   background:
-    repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 3px),
     radial-gradient(55% 55% at 72% 42%, color-mix(in oklab, var(--color-accent) 16%, transparent), transparent 70%),
     radial-gradient(120% 120% at 50% 30%, transparent 60%, rgba(0,0,0,0.55));
 }
 [data-theme="blueprint"] .hero-atmosphere {
+  background: radial-gradient(55% 55% at 72% 42%, color-mix(in oklab, var(--color-accent) 16%, transparent), transparent 70%);
+}
+
+/* Per-theme ambient texture across the WHOLE page, fixed and well behind all content,
+   so each theme's character carries through every section, not just the hero. */
+[data-theme="pixel"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 3px);
+}
+[data-theme="blueprint"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background-image:
-    radial-gradient(55% 55% at 72% 42%, color-mix(in oklab, var(--color-accent) 16%, transparent), transparent 70%),
-    linear-gradient(var(--color-accent) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-accent) 1px, transparent 1px);
-  background-size: 100% 100%, 28px 28px, 28px 28px;
-  opacity: 0.9;
+    linear-gradient(color-mix(in oklab, var(--color-accent) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--color-accent) 7%, transparent) 1px, transparent 1px);
+  background-size: 34px 34px;
 }
 
 /* Small screens: compact switcher in the top-right (the ~217px control fits down to 320px). */
