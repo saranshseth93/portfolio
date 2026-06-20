@@ -123,6 +123,39 @@ function initApproach(): void {
   }
 }
 
+// Career story: the section title rises, then each role is a scene that reveals as it
+// enters, the company name flying up word by word, the points staggering in.
+function initCareer(): void {
+  const section = document.querySelector<HTMLElement>("#experience");
+  if (!section) return;
+
+  const title = section.querySelector<HTMLElement>("[data-career-headline]");
+  if (title) {
+    let words: Element[] = [title];
+    try { words = new SplitText(title, { type: "words", mask: "words" }).words; } catch { /* */ }
+    gsap.from(words, {
+      yPercent: 120, opacity: 0, stagger: 0.08, ease: "power4.out",
+      scrollTrigger: { trigger: title, start: "top 82%", end: "top 45%", scrub: 0.6 },
+    });
+  }
+
+  for (const scene of gsap.utils.toArray<HTMLElement>(".career-scene")) {
+    const company = scene.querySelector<HTMLElement>("[data-career-company]");
+    const meta = scene.querySelectorAll<HTMLElement>(".career-dates, .career-role");
+    const points = scene.querySelector<HTMLElement>("[data-career-points]");
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: scene, start: "top 78%" },
+    });
+    if (company) {
+      let words: Element[] = [company];
+      try { words = new SplitText(company, { type: "words", mask: "words" }).words; } catch { /* */ }
+      tl.from(words, { yPercent: 120, rotate: 5, opacity: 0, stagger: 0.08, duration: 0.9, ease: "power4.out" });
+    }
+    if (meta.length) tl.from(meta, { y: 24, opacity: 0, stagger: 0.08, duration: 0.6, ease: "power2.out" }, "-=0.5");
+    if (points) tl.from(points.children, { y: 40, opacity: 0, filter: "blur(6px)", stagger: 0.12, duration: 0.8, ease: "expo.out" }, "-=0.3");
+  }
+}
+
 let registered = false;
 
 export function initScrollStage(): void {
@@ -144,6 +177,7 @@ export function initScrollStage(): void {
   initHeroParallax();
   initChapterReveals();
   initApproach();
+  initCareer();
 
   ScrollTrigger.refresh();
 }

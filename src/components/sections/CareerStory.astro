@@ -1,0 +1,49 @@
+---
+// Content from the project brief. Enriched with real achievements once the resume is in.
+const roles = [
+  {
+    company: "Intrepid",
+    role: "Senior Software Engineer, Acting Tech Lead, Design Systems",
+    dates: "Mar 2024 to Present",
+    points: [
+      "Leading the Phoenix design system migration to a layered, white-label architecture.",
+      "Built the Figma to code token sync pipeline with Code Connect and the Variables API.",
+      "Building the Phoenix MCP server that surfaces tokens and component rules to AI coding assistants.",
+    ],
+  },
+  {
+    company: "AmazingCo",
+    role: "Full Stack Developer",
+    dates: "2022 to 2024",
+    points: ["Shipped product features across the stack for a high-traffic marketplace."],
+  },
+  {
+    company: "Nookal",
+    role: "Frontend Web Developer",
+    dates: "2017 to 2022",
+    points: ["Built and maintained the customer-facing web application."],
+  },
+];
+---
+<section id="experience" class="career">
+  <div class="career-intro chapter-inner">
+    <h2 class="chapter-headline" data-career-headline>Experience</h2>
+    <span class="chapter-rule" aria-hidden="true"></span>
+  </div>
+
+  {roles.map((r) => (
+    <article class="career-scene">
+      <div class="career-scene-inner">
+        <p class="career-dates">{r.dates}</p>
+        <h3 class="career-company" data-career-company>{r.company}</h3>
+        <p class="career-role">{r.role}</p>
+        <ul class="career-points" data-career-points>
+          {r.points.map((pt) => <li>{pt}</li>)}
+        </ul>
+      </div>
+    </article>
+  ))}
+
+  <!-- Projects slot. Add one or two real projects here when SafeSure / Parichay ship.
+       Keep the same scene rhythm as the roles above. Do not populate now. -->
+</section>
