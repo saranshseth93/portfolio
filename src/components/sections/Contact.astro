@@ -1,0 +1,17 @@
+---
+const cv = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/resume.pdf`;
+---
+<section id="contact" class="chapter contact">
+  <div class="chapter-inner">
+    <h2 class="chapter-headline" data-contact-headline>Let's build something</h2>
+    <p class="chapter-lead">
+      Open to senior frontend and design-systems roles. Email is the fastest way to reach me.
+    </p>
+    <a class="contact-email" href="mailto:saranshseth93@gmail.com">saranshseth93@gmail.com</a>
+    <ul class="contact-links" data-contact-links>
+      <li><a class="link" href="https://github.com/saranshseth93" rel="me noopener noreferrer">GitHub</a></li>
+      <li><a class="link" href="https://linkedin.com/in/saranshseth" rel="me noopener noreferrer">LinkedIn</a></li>
+      <li><a class="link" href={cv} download>Download CV</a></li>
+    </ul>
+  </div>
+</section>

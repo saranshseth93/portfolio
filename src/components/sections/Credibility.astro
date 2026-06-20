@@ -1,0 +1,19 @@
+---
+const stack = [
+  "Vue 3", "React", "TypeScript", "Design tokens", "Figma Code Connect", "Variables API",
+  "Storybook", "Playwright", "Vitest", "WCAG 2.1 AA", "Core Web Vitals", "GitHub Actions",
+  "MCP servers",
+];
+---
+<section id="credibility" class="chapter">
+  <div class="chapter-inner">
+    <p class="cred-statement" data-cred-statement>
+      Eight years. A design system of <em>60+</em> components across <em>three</em> product teams.
+      <em>Two</em> hackathon wins, both shipped to production. Performance and accessibility held to
+      budget, every release.
+    </p>
+    <ul class="cred-stack" data-cred-stack>
+      {stack.map((s) => <li class="cred-tag">{s}</li>)}
+    </ul>
+  </div>
+</section>

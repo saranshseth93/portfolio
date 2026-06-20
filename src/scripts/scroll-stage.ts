@@ -184,6 +184,50 @@ function initLabReveal(): void {
   }
 }
 
+// Credibility: the statement reveals line by line, then the stack tags stagger in.
+function initCredibility(): void {
+  const section = document.querySelector<HTMLElement>("#credibility");
+  if (!section) return;
+  const statement = section.querySelector<HTMLElement>("[data-cred-statement]");
+  const stack = section.querySelector<HTMLElement>("[data-cred-stack]");
+  if (statement) {
+    let lines: Element[] = [statement];
+    try { lines = new SplitText(statement, { type: "lines", mask: "lines" }).lines; } catch { /* */ }
+    gsap.from(lines, {
+      yPercent: 110, opacity: 0, stagger: 0.12, ease: "power3.out",
+      scrollTrigger: { trigger: statement, start: "top 82%", end: "bottom 55%", scrub: 0.6 },
+    });
+  }
+  if (stack) {
+    gsap.from(stack.children, {
+      y: 24, opacity: 0, stagger: 0.05, ease: "power2.out",
+      scrollTrigger: { trigger: stack, start: "top 88%" },
+    });
+  }
+}
+
+// Contact: headline rises, the email and links fade up.
+function initContact(): void {
+  const section = document.querySelector<HTMLElement>("#contact");
+  if (!section) return;
+  const headline = section.querySelector<HTMLElement>("[data-contact-headline]");
+  const rest = section.querySelectorAll<HTMLElement>(".chapter-lead, .contact-email, [data-contact-links]");
+  if (headline) {
+    let words: Element[] = [headline];
+    try { words = new SplitText(headline, { type: "words", mask: "words" }).words; } catch { /* */ }
+    gsap.from(words, {
+      yPercent: 120, opacity: 0, stagger: 0.08, ease: "power4.out",
+      scrollTrigger: { trigger: headline, start: "top 84%", end: "top 48%", scrub: 0.6 },
+    });
+  }
+  if (rest.length) {
+    gsap.from(rest, {
+      y: 30, opacity: 0, stagger: 0.1, ease: "power3.out",
+      scrollTrigger: { trigger: section, start: "top 70%" },
+    });
+  }
+}
+
 let registered = false;
 
 export function initScrollStage(): void {
@@ -207,6 +251,8 @@ export function initScrollStage(): void {
   initApproach();
   initExperience();
   initLabReveal();
+  initCredibility();
+  initContact();
 
   ScrollTrigger.refresh();
 }
