@@ -4,7 +4,7 @@ My personal site. One page, no project tiles, no backend. The page itself is the
 cinematic scroll journey that doubles as proof of how I build, with a hero portrait and an
 interactive design system you can actually drive.
 
-Live: https://saranshseth93.github.io/portfolio (custom domain to follow).
+Live: https://saranshseth.me
 
 ## The idea
 
@@ -108,9 +108,15 @@ The generated images are committed so a build, including CI, never needs the nat
 ## Deployment
 
 GitHub Actions builds the site and publishes it to GitHub Pages on every push to `main`
-(`.github/workflows/deploy.yml`). It serves from a project subpath, so `astro.config.mjs` sets
-`base: "/portfolio"`. The head URLs and asset paths are base-aware, so moving to the custom
-domain is two lines: set `site` to the domain, `base` to `/`, and add a `public/CNAME`.
+(`.github/workflows/deploy.yml`). It serves from the apex domain `saranshseth.me`, so
+`astro.config.mjs` sets `site` to that domain and `base` to `/`, and `public/CNAME` tells
+Pages which domain to claim. Head URLs and asset paths are base-aware, so the root base
+needs no other changes.
+
+DNS runs through Cloudflare (nameservers set at Namecheap). The apex `@` has four A records
+to the GitHub Pages IPs (`185.199.108-111.153`), kept DNS-only so GitHub can issue the TLS
+cert. `www` is a CNAME to `saranshseth93.github.io`; GitHub redirects it to the apex, so
+both `www.saranshseth.me` and `saranshseth.me` resolve to the same site over HTTPS.
 
 ## Accessibility and motion
 
