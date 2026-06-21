@@ -1,9 +1,9 @@
 // The wordmark leans into the cursor: Unbounded is a variable font, so each
 // letter's weight swells as the pointer nears it and eases back when it leaves.
 // Desktop fine-pointer only; reduced-motion and touch keep the static bold name.
-const REST = 500; // resting weight once the load settle relaxes
-const PEAK = 700; // heaviest weight directly under the pointer (font axis max)
-const RADIUS = 150; // px falloff around each letter
+const REST = 360; // resting weight once the load settle relaxes (light)
+const PEAK = 880; // heaviest weight directly under the pointer (axis max is 900)
+const RADIUS = 200; // px falloff around each letter
 const SETTLE_END = 680; // matches the name-settle keyframe end, so there is no jump
 
 export function initHeroName(): void {
@@ -17,18 +17,26 @@ export function initHeroName(): void {
   const start = () => {
     const text = el.textContent ?? "";
     el.setAttribute("aria-label", text.trim());
-    el.classList.add("is-split");
     el.textContent = "";
     const letters: HTMLElement[] = [];
-    for (const ch of text) {
-      const span = document.createElement("span");
-      span.className = "hero-name-ch";
-      span.setAttribute("aria-hidden", "true");
-      span.textContent = ch === " " ? " " : ch;
-      span.style.fontVariationSettings = `"wght" ${SETTLE_END}, "opsz" 144`;
-      el.appendChild(span);
-      letters.push(span);
-    }
+    // One inline-block per word so letters never break mid-word, while the
+    // space between words stays a normal wrap point (keeps the natural layout).
+    const words = text.trim().split(/\s+/);
+    words.forEach((word, wi) => {
+      const wrap = document.createElement("span");
+      wrap.className = "hero-name-word";
+      wrap.setAttribute("aria-hidden", "true");
+      for (const ch of word) {
+        const span = document.createElement("span");
+        span.className = "hero-name-ch";
+        span.textContent = ch;
+        span.style.fontVariationSettings = `"wght" ${SETTLE_END}, "opsz" 144`;
+        wrap.appendChild(span);
+        letters.push(span);
+      }
+      el.appendChild(wrap);
+      if (wi < words.length - 1) el.appendChild(document.createTextNode(" "));
+    });
 
     const cur = letters.map(() => SETTLE_END);
     const target = letters.map(() => REST);
@@ -41,14 +49,14 @@ export function initHeroName(): void {
         const dx = px - (r.left + r.width / 2);
         const dy = py - (r.top + r.height / 2);
         const prox = Math.max(0, 1 - Math.hypot(dx, dy) / RADIUS);
-        target[i] = REST + (PEAK - REST) * prox * prox;
+        target[i] = REST + (PEAK - REST) * prox;
       }
     };
 
     const tick = () => {
       let active = false;
       for (let i = 0; i < letters.length; i++) {
-        cur[i] += (target[i] - cur[i]) * 0.16;
+        cur[i] += (target[i] - cur[i]) * 0.22;
         letters[i].style.fontVariationSettings = `"wght" ${Math.round(cur[i])}, "opsz" 144`;
         if (Math.abs(target[i] - cur[i]) > 0.4) active = true;
       }

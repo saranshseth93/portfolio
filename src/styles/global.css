@@ -28,7 +28,7 @@
 @font-face {
   font-family: "Unbounded";
   src: url("../assets/fonts/unbounded-var.woff2") format("woff2");
-  font-weight: 300 700;
+  font-weight: 200 900;
   font-display: swap;
 }
 
@@ -164,9 +164,10 @@ html, body { overflow-x: clip; max-width: 100%; }
   font-size: var(--wordmark-size, clamp(3rem, 9vw, 5.5rem));
   animation: name-settle 0.9s cubic-bezier(0.16, 0.84, 0.16, 1) both;
 }
-/* Split state: letters become individual spans that react to the cursor, so the
-   word must stay on one line to avoid breaking between letters. */
-.hero-name.is-split { white-space: nowrap; }
+/* Split state: each word is one inline-block so letters never break mid-word,
+   while the space between words stays a normal wrap point (keeps the natural
+   two-line layout). Letters react to the cursor via variable weight. */
+.hero-name-word { display: inline-block; }
 .hero-name-ch { will-change: font-variation-settings; }
 .hero-name-line {
   display: block;
