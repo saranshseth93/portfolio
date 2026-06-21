@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ProgressNav from "../components/ProgressNav.astro";
 import Hero from "../components/Hero.astro";
 import Approach from "../components/sections/Approach.astro";
 import CareerStory from "../components/sections/CareerStory.astro";
@@ -8,6 +9,7 @@ import Credibility from "../components/sections/Credibility.astro";
 import Contact from "../components/sections/Contact.astro";
 ---
 <BaseLayout title="Saransh Seth, Senior Frontend Engineer and Design Systems Tech Lead" description="Senior Frontend Engineer and Design Systems Tech Lead in Melbourne. Token-driven theming, performance, and accessible interfaces.">
+  <ProgressNav />
   <main>
     <Hero />
     <Approach />
@@ -22,8 +24,12 @@ import Contact from "../components/sections/Contact.astro";
 </BaseLayout>
 
 <script>
+  import { initCursor } from "../scripts/cursor";
   // Lazy-load the motion stage (GSAP) on idle so it never sits on the critical path.
-  const start = () => import("../scripts/scroll-stage").then((m) => m.initScrollStage());
+  const start = () => {
+    initCursor();
+    import("../scripts/scroll-stage").then((m) => m.initScrollStage());
+  };
   if ("requestIdleCallback" in window) requestIdleCallback(start, { timeout: 2000 });
   else window.addEventListener("load", () => setTimeout(start, 200));
 </script>

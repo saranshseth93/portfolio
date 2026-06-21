@@ -109,7 +109,7 @@ function initApproach(): void {
     scrollTrigger: {
       trigger: section,
       start: "top top",
-      end: "+=130%",
+      end: "+=90%",
       scrub: 0.8,
       pin: true,
       anticipatePin: 1,
@@ -140,7 +140,7 @@ function initExperience(): void {
     scrollTrigger: {
       trigger: section,
       start: "top top",
-      end: "+=130%",
+      end: "+=90%",
       scrub: 0.8,
       pin: true,
       anticipatePin: 1,
@@ -212,9 +212,22 @@ function initCredibility(): void {
       y: 24, opacity: 0, stagger: 0.05, ease: "power2.out",
       scrollTrigger: { trigger: stack, start: "top 88%" },
     });
-    // Give a few random chips a glow beneath them.
-    const picks = [...tags].sort(() => Math.random() - 0.5).slice(0, 3);
-    for (const t of picks) t.classList.add("cred-tag--glow");
+    // A glow roams one chip at a time while the section is in view.
+    if (tags.length > 1) {
+      let current = -1;
+      let timer = 0;
+      const roam = () => {
+        if (current >= 0) tags[current].classList.remove("cred-tag--glow");
+        let next = current;
+        while (next === current) next = Math.floor(Math.random() * tags.length);
+        current = next;
+        tags[current].classList.add("cred-tag--glow");
+      };
+      const stop = () => { if (timer) { clearInterval(timer); timer = 0; } };
+      const start = () => { if (!timer && !document.hidden) { roam(); timer = window.setInterval(roam, 1700); } };
+      new IntersectionObserver((e) => (e[0].isIntersecting ? start() : stop())).observe(stack);
+      document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); });
+    }
   }
 }
 

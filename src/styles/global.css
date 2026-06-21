@@ -151,8 +151,47 @@ html, body { overflow-x: clip; max-width: 100%; }
   font-size: clamp(3rem, 9vw, 5.5rem);
   animation: name-settle 0.9s cubic-bezier(0.16, 0.84, 0.16, 1) both;
 }
+.hero-name-line {
+  display: block;
+  height: 3px;
+  width: 0;
+  margin-top: 0.65rem;
+  border-radius: 2px;
+  background: var(--color-accent);
+  animation: name-line 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+}
 .hero-tagline { margin-top: 1.25rem; max-width: 40ch; color: var(--color-text-muted); font-size: 1rem; }
 @media (min-width: 640px) { .hero-tagline { font-size: 1.125rem; } }
+
+/* Scroll-progress bar + section dot-nav (cohesion). */
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 50; pointer-events: none; }
+.scroll-progress-bar { display: block; height: 100%; width: 100%; transform: scaleX(0); transform-origin: left; background: var(--color-accent); }
+.dot-nav { position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%); z-index: 40; display: flex; flex-direction: column; gap: 0.9rem; }
+@media (max-width: 900px) { .dot-nav { display: none; } }
+.dot-nav-item { display: flex; align-items: center; justify-content: flex-end; gap: 0.55rem; }
+.dot-nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-text-muted); opacity: 0.4; transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease; }
+.dot-nav-item.is-active .dot-nav-dot { opacity: 1; background: var(--color-accent); transform: scale(1.5); }
+.dot-nav-label {
+  font-family: var(--font-display); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--color-text-muted); opacity: 0; transform: translateX(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none;
+}
+.dot-nav-item:hover .dot-nav-label, .dot-nav-item.is-active .dot-nav-label, .dot-nav-item:focus-visible .dot-nav-label { opacity: 1; transform: translateX(0); }
+
+/* Custom cursor (desktop, fine pointer). */
+.cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 60; border-radius: 50%; mix-blend-mode: difference; }
+.cursor-dot { width: 7px; height: 7px; margin: -3.5px; background: #fff; }
+.cursor-ring { width: 34px; height: 34px; margin: -17px; border: 1px solid rgba(255, 255, 255, 0.6); transition: width 0.2s ease, height 0.2s ease, margin 0.2s ease, border-color 0.2s ease; }
+body.cursor-hover .cursor-ring { width: 54px; height: 54px; margin: -27px; border-color: rgba(255, 255, 255, 0.9); }
+/* One transition covering every property these magnetic controls animate, so the magnetic
+   reset is smooth without clobbering their colour/shadow transitions. */
+.cv-button, .contact-email, .swatch, .lab-chip, .lab-btn, .lab-reset, .dot-nav-item {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+@media (pointer: fine) { body.has-custom-cursor { cursor: none; } }
+@media (pointer: coarse) { .cursor-dot, .cursor-ring { display: none; } }
+
+@keyframes name-line { to { width: clamp(6rem, 14vw, 9rem); } }
 
 .hero-actions { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .cv-button {
@@ -561,15 +600,13 @@ html, body { overflow-x: clip; max-width: 100%; }
   border: 1px solid var(--color-surface);
   border-radius: 999px;
   padding: 0.4rem 0.85rem;
+  transition: box-shadow 0.7s ease, border-color 0.7s ease, color 0.7s ease;
 }
+/* The roaming glow: lit one chip at a time by JS, fading via the transition above. */
 .cred-tag--glow {
   color: var(--color-text);
-  border-color: color-mix(in oklab, var(--color-accent) 55%, var(--color-surface));
-  animation: cred-glow 3.2s ease-in-out infinite;
-}
-@keyframes cred-glow {
-  0%, 100% { box-shadow: 0 5px 14px -8px color-mix(in oklab, var(--color-accent) 55%, transparent); }
-  50% { box-shadow: 0 10px 26px -6px color-mix(in oklab, var(--color-accent) 85%, transparent); }
+  border-color: color-mix(in oklab, var(--color-accent) 60%, var(--color-surface));
+  box-shadow: 0 9px 24px -6px color-mix(in oklab, var(--color-accent) 85%, transparent);
 }
 
 /* ---- Contact ---- */
@@ -595,6 +632,7 @@ html, body { overflow-x: clip; max-width: 100%; }
   .boot { margin-top: 0; min-height: 0; }
   .boot::after { animation: none; }
   .hero-name { animation: none; font-variation-settings: "wght" 760; opacity: 1; transform: none; }
+  .hero-name-line { animation: none; width: clamp(6rem, 14vw, 9rem); }
   .hero-hint { animation: none; opacity: 0.85; }
   .hero-scroll svg { animation: none; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
