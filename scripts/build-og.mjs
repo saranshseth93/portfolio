@@ -14,14 +14,14 @@ const pTop = Math.round((H - PH) / 2);
 const bg = Buffer.from(`<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="g" cx="76%" cy="42%" r="58%">
-      <stop offset="0%" stop-color="#AD2B63" stop-opacity="0.32"/>
-      <stop offset="70%" stop-color="#AD2B63" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#E0316B" stop-opacity="0.32"/>
+      <stop offset="70%" stop-color="#E0316B" stop-opacity="0"/>
     </radialGradient>
   </defs>
   <rect width="${W}" height="${H}" fill="#0E0E12"/>
   <rect width="${W}" height="${H}" fill="url(#g)"/>
   <text x="72" y="300" font-family="Helvetica, Arial, sans-serif" font-size="86" font-weight="700" fill="#EDEAE3">Saransh Seth</text>
-  <rect x="74" y="330" width="118" height="4" rx="2" fill="#AD2B63"/>
+  <rect x="74" y="330" width="118" height="4" rx="2" fill="#E0316B"/>
   <text x="74" y="384" font-family="Helvetica, Arial, sans-serif" font-size="29" fill="#9A968C">Senior Frontend Engineer</text>
   <text x="74" y="424" font-family="Helvetica, Arial, sans-serif" font-size="29" fill="#9A968C">Design Systems Tech Lead, Melbourne</text>
 </svg>`);

@@ -34,7 +34,7 @@ function prefersReducedMotion(): boolean {
 
 // Each theme's accent, used to colour the shockwave. Mirrors the tokens in global.css.
 const ACCENT: Record<ThemeName, string> = {
-  midnight: "#AD2B63",
+  midnight: "#E0316B",
   pixel: "#5CE65C",
   blueprint: "#4FC3F7",
 };
