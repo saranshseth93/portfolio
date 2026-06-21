@@ -4,12 +4,10 @@ import tailwindcss from "@tailwindcss/vite";
 // Static single page. Tailwind v4 runs through the Vite plugin so content
 // scanning is automatic and the emitted CSS contains only used utilities.
 //
-// Deploy target: GitHub Pages. Until the saranshseth.me DNS cutover completes
-// the site is served at the project subpath, so base is "/portfolio" and the
-// github.io preview URL works. At cutover, set site to "https://saranshseth.me"
-// and base to "/" (the apex serves from root) and uncomment public/CNAME use.
+// Deploy target: GitHub Pages on the custom apex domain saranshseth.me.
+// Served from the root, so base is "/". public/CNAME tells Pages the domain.
 export default defineConfig({
-  site: "https://saranshseth93.github.io",
-  base: "/portfolio",
+  site: "https://saranshseth.me",
+  base: "/",
   vite: { plugins: [tailwindcss()] },
 });
