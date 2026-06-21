@@ -161,7 +161,7 @@ html, body { overflow-x: clip; max-width: 100%; }
   font-synthesis: weight none;
   font-weight: 600;
   line-height: 0.95;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.02em;
   text-wrap: balance;
   color: var(--color-text);
   font-size: clamp(3rem, 9vw, 5.5rem);
@@ -313,8 +313,8 @@ body.cursor-hover .cursor-ring { width: 54px; height: 54px; margin: -27px; borde
 }
 
 @keyframes name-settle {
-  from { font-variation-settings: "wght" 400, "opsz" 144; opacity: 0; transform: translateY(0.4rem); letter-spacing: 0.01em; }
-  to   { font-variation-settings: "wght" 680, "opsz" 144; opacity: 1; transform: translateY(0); letter-spacing: -0.02em; }
+  from { font-variation-settings: "wght" 400, "opsz" 144; opacity: 0; transform: translateY(0.4rem); letter-spacing: 0.06em; }
+  to   { font-variation-settings: "wght" 680, "opsz" 144; opacity: 1; transform: translateY(0); letter-spacing: 0.02em; }
 }
 @keyframes hint-in { from { opacity: 0; } to { opacity: 0.85; } }
 @keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
