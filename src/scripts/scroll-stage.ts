@@ -14,23 +14,6 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-function initReveals(): void {
-  const targets = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-  for (const el of targets) {
-    el.classList.add("reveal-init"); // hidden only now that JS runs; no-JS stays visible
-    ScrollTrigger.create({
-      trigger: el,
-      start: "top 88%",
-      once: true,
-      onEnter: () => {
-        el.style.transitionDelay = `${Number(el.dataset.revealDelay ?? 0)}ms`;
-        el.classList.add("reveal-in");
-        el.classList.remove("reveal-init");
-      },
-    });
-  }
-}
-
 function initHeroParallax(): void {
   const portrait = document.querySelector<HTMLElement>("[data-hero-portrait]");
   const hero = document.querySelector<HTMLElement>("#hero");
@@ -51,38 +34,6 @@ function initAnchors(lenis: Lenis): void {
       if (!target) return;
       event.preventDefault();
       lenis.scrollTo(target as HTMLElement, { offset: 0 });
-    });
-  }
-}
-
-// A headline rises line by line from behind a mask, scrubbed to scroll; supporting
-// content staggers in as it enters. The plain text is the no-JS / reduced-motion default.
-function initChapterReveals(): void {
-  for (const headline of gsap.utils.toArray<HTMLElement>("[data-split]")) {
-    let lines: Element[] = [headline];
-    try {
-      lines = new SplitText(headline, { type: "lines", mask: "lines" }).lines;
-    } catch {
-      /* SplitText unavailable: animate the whole headline instead */
-    }
-    gsap.from(lines, {
-      yPercent: 120,
-      opacity: 0,
-      stagger: 0.12,
-      ease: "power3.out",
-      scrollTrigger: { trigger: headline, start: "top 82%", end: "top 38%", scrub: 0.6 },
-    });
-  }
-
-  for (const group of gsap.utils.toArray<HTMLElement>("[data-stagger]")) {
-    gsap.from(group.children, {
-      y: 44,
-      opacity: 0,
-      filter: "blur(6px)",
-      duration: 1,
-      stagger: 0.12,
-      ease: "expo.out",
-      scrollTrigger: { trigger: group, start: "top 82%" },
     });
   }
 }
@@ -270,9 +221,7 @@ export function initScrollStage(): void {
   gsap.ticker.lagSmoothing(0);
 
   initAnchors(lenis);
-  initReveals();
   initHeroParallax();
-  initChapterReveals();
   initApproach();
   initExperience();
   initLabReveal();

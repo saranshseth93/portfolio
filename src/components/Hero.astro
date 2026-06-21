@@ -36,7 +36,6 @@ const cv = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/resume.pdf`;
       <!-- SVG filter defs: decorative per-theme portrait treatments. Hidden from accessibility tree. -->
       <svg width="0" height="0" aria-hidden="true" style="position:absolute">
         <filter id="px-dither"><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncR type="discrete" tableValues="0 0.36 0.9"/><feFuncG type="discrete" tableValues="0.04 0.55 0.95"/><feFuncB type="discrete" tableValues="0 0.2 0.4"/></feComponentTransfer></filter>
-        <filter id="bp-edge"><feColorMatrix type="saturate" values="0"/><feConvolveMatrix order="3" kernelMatrix="1 0 -1 2 0 -2 1 0 -1" preserveAlpha="true"/><feComponentTransfer><feFuncR type="linear" slope="0.3"/><feFuncG type="linear" slope="0.76"/><feFuncB type="linear" slope="0.97"/></feComponentTransfer></filter>
       </svg>
       <picture>
         <source type="image/avif" srcset={`${a600.src} 600w, ${a1200.src} 1200w`} sizes="(max-width: 768px) 90vw, 48vw" />

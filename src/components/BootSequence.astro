@@ -5,6 +5,6 @@
   const el = document.querySelector<HTMLElement>("[data-boot]");
   if (el) {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    runBoot(el, { reducedMotion: reduced, onDone: () => el.classList.add("boot-done") });
+    runBoot(el, { reducedMotion: reduced });
   }
 </script>

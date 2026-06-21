@@ -38,7 +38,10 @@ export function initCursor(): void {
     if ((e.target as Element).closest(INTERACTIVE)) document.body.classList.add("cursor-hover");
   });
   document.addEventListener("pointerout", (e) => {
-    if ((e.target as Element).closest(INTERACTIVE)) document.body.classList.remove("cursor-hover");
+    // Only drop the hover state when leaving for somewhere outside any interactive
+    // element; moving onto a child (e.g. the icon inside a button) must not flicker.
+    const to = e.relatedTarget as Element | null;
+    if (!to || !to.closest(INTERACTIVE)) document.body.classList.remove("cursor-hover");
   });
 
   // Magnetic pull: the element drifts toward the pointer while hovered.
