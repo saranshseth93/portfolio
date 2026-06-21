@@ -26,9 +26,9 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "Fraunces";
-  src: url("../assets/fonts/fraunces-var.woff2") format("woff2");
-  font-weight: 400 700;
+  font-family: "Unbounded";
+  src: url("../assets/fonts/unbounded-var.woff2") format("woff2");
+  font-weight: 300 700;
   font-display: swap;
 }
 
@@ -43,7 +43,7 @@
   --color-focus: #C9A227;
   --color-on-accent: #000000;
 
-  --font-display: "Fraunces", Georgia, serif;
+  --font-display: "Unbounded", system-ui, sans-serif;
   --font-body: "Hanken Grotesk", system-ui, sans-serif;
 }
 
