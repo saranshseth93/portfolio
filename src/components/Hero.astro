@@ -62,6 +62,8 @@ const cv = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/resume.pdf`;
   // The reveal is ambient, so init once the portrait is on screen (every device, not just
   // pointer ones). Deferred to idle after first paint so it never competes with LCP.
   import { initHeroShader } from "../scripts/hero-shader";
+  import { initHeroName } from "../scripts/hero-name";
+  initHeroName();
   const host = document.querySelector("[data-hero-portrait]");
   if (host) {
     const start = () => {

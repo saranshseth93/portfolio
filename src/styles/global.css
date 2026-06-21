@@ -164,6 +164,10 @@ html, body { overflow-x: clip; max-width: 100%; }
   font-size: var(--wordmark-size, clamp(3rem, 9vw, 5.5rem));
   animation: name-settle 0.9s cubic-bezier(0.16, 0.84, 0.16, 1) both;
 }
+/* Split state: letters become individual spans that react to the cursor, so the
+   word must stay on one line to avoid breaking between letters. */
+.hero-name.is-split { white-space: nowrap; }
+.hero-name-ch { will-change: font-variation-settings; }
 .hero-name-line {
   display: block;
   height: 3px;
