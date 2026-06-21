@@ -31,6 +31,12 @@
   font-weight: 300 700;
   font-display: swap;
 }
+@font-face {
+  font-family: "Bonres";
+  src: url("../assets/fonts/bonres.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
 
 /* Default theme: Midnight. These generate the semantic utilities. */
 @theme {
@@ -44,6 +50,7 @@
   --color-on-accent: #000000;
 
   --font-display: "Unbounded", system-ui, sans-serif;
+  --font-wordmark: "Bonres", "Unbounded", system-ui, sans-serif;
   --font-body: "Hanken Grotesk", system-ui, sans-serif;
 }
 
@@ -58,6 +65,7 @@
   --color-focus: #FFB000;
   --color-on-accent: #0B0E0A;
   --font-display: "Pixelify Sans", ui-monospace, monospace;
+  --font-wordmark: "Pixelify Sans", ui-monospace, monospace;
   --font-body: "JetBrains Mono", ui-monospace, monospace;
 }
 
@@ -72,6 +80,7 @@
   --color-focus: #4FC3F7;
   --color-on-accent: #0A1830;
   --font-display: "JetBrains Mono", ui-monospace, monospace;
+  --font-wordmark: "JetBrains Mono", ui-monospace, monospace;
   --font-body: "JetBrains Mono", ui-monospace, monospace;
 }
 
@@ -148,7 +157,8 @@ html, body { overflow-x: clip; max-width: 100%; }
 @media (min-width: 768px) { .hero-copy { order: 0; } }
 
 .hero-name {
-  font-family: var(--font-display);
+  font-family: var(--font-wordmark);
+  font-synthesis: weight none;
   font-weight: 600;
   line-height: 0.95;
   letter-spacing: -0.03em;
