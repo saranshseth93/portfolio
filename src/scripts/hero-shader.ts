@@ -1,6 +1,6 @@
 import vertSrc from "./shaders/reveal.vert?raw";
 import fragSrc from "./shaders/reveal.frag?raw";
-import texAsset from "../assets/portrait/cutout.png";
+import texAsset from "../assets/portrait/portrait-1200.webp";
 
 // The reveal is ambient: it drifts across the portrait on its own so every device
 // (phones included) sees the effect, and follows the pointer or a dragging finger
