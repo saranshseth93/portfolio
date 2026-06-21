@@ -2,7 +2,7 @@
 
 A single-page personal portfolio for a senior frontend engineer / design systems tech lead. The page itself is the proof of skill. No project tiles, no broken links, no backend. The signature is a theme system that transforms a hero portrait three different ways, with a cursor-driven reveal of the real photo underneath.
 
-This replaces the current saranshseth.me. Deploy target: Cloudflare Pages.
+This replaces the current saranshseth.me. Deploy target: GitHub Pages on the custom apex domain saranshseth.me, with DNS through Cloudflare.
 
 ## Writing rules (apply to all copy and code comments)
 
