@@ -1,13 +1,24 @@
 # saranshseth.me
 
 ```
-            _________
-           /         \
-          |  _     _  |
-          | |_|   |_| |     aviators on, systems up
-          |     _     |
-           \   '-'   /
-            \_______/
+                       ..,.
+                      .. .,,:::,..
+                    ,ifLG@@@@8GCfti:.
+                   i8@@@@@@@@0GCLt1i;:.
+                  t@@@@@@@@@0GGCL1i;;:,
+                 i88@@@@0C08@0ftt1;,.
+                f@01i00i f@8@C:i...
+            .  t8CCt18C iCtti ,;
+              ,1:,10@L1,,...  ,   ,:,.
+            .    1@G1i1;:.  .::,,,,.,
+             . ::Li,  ;.;8Lt1;:,,.
+              :@@f:t;.,1L@@@@Gfi,.
+              t@iiLf1:..:;f80Gfti,
+              Ci.fGCC1;::. tCfi;,.
+              1iC1,:::tfLi.;;,..
+               :fLCLffti:.
+                ,i1i:,
+
          S A R A N S H   S E T H
 ```
 
