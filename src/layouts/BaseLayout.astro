@@ -24,11 +24,16 @@ const favicon = `${base}favicon.svg`;
     <link rel="preload" href={hankenFont} as="font" type="font/woff2" crossorigin />
     <meta name="theme-color" content="#0E0E12" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Saransh Seth" />
+    <meta property="og:locale" content="en_AU" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Saransh Seth, Senior Frontend Engineer and Design Systems Tech Lead" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -37,6 +42,9 @@ const favicon = `${base}favicon.svg`;
       jobTitle: "Senior Frontend Engineer, Design Systems Tech Lead",
       address: { "@type": "PostalAddress", addressLocality: "Melbourne", addressCountry: "AU" },
       url: canonical,
+      image: ogImage,
+      email: "mailto:saranshseth93@gmail.com",
+      worksFor: { "@type": "Organization", name: "Intrepid" },
       sameAs: ["https://github.com/saranshseth93", "https://linkedin.com/in/saranshseth"],
     })} />
     <script is:inline>
