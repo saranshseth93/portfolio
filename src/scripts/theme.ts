@@ -1,4 +1,4 @@
-export const THEME_NAMES = ["midnight", "pixel", "blueprint"] as const;
+const THEME_NAMES = ["midnight", "pixel", "blueprint"] as const;
 type ThemeName = (typeof THEME_NAMES)[number];
 
 const KEY = "theme";
@@ -31,13 +31,6 @@ function prefersReducedMotion(): boolean {
     && typeof window.matchMedia === "function"
     && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
-
-// Each theme's accent, used to colour the shockwave. Mirrors the tokens in global.css.
-const ACCENT: Record<ThemeName, string> = {
-  midnight: "#E0316B",
-  pixel: "#5CE65C",
-  blueprint: "#4FC3F7",
-};
 
 // A glowing wavefront that detonates from the clicked swatch and sweeps the screen.
 // Rendered in the top layer (Popover API) so it sits above the View Transition snapshot.
@@ -78,7 +71,10 @@ export function applyTheme(name: string, opts: ApplyOptions = {}): void {
     const x = opts.x ?? window.innerWidth / 2;
     const y = opts.y ?? 0;
     // The blast wave is the spectacle; the View Transition sweeps the recolour in behind it.
-    spawnShockwave(x, y, ACCENT[theme]);
+    // Read the new theme's accent off its swatch dot, so the colour lives only in CSS.
+    const dot = document.querySelector<HTMLElement>(`[data-theme-btn="${theme}"] .dot`);
+    const accent = dot ? getComputedStyle(dot).backgroundColor : "currentColor";
+    spawnShockwave(x, y, accent);
     if (typeof startViewTransition === "function") {
       const root = document.documentElement;
       root.style.setProperty("--vt-x", `${x}px`);
