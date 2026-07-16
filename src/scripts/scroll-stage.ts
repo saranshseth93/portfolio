@@ -38,6 +38,18 @@ function initAnchors(lenis: Lenis): void {
   }
 }
 
+// Motto: the three lines rise and fade in as the band comes into view. Quiet, not pinned.
+function initMotto(): void {
+  const inner = document.querySelector<HTMLElement>("[data-motto]");
+  if (!inner) return;
+  const lines = inner.querySelectorAll<HTMLElement>("p");
+  if (!lines.length) return;
+  gsap.from(lines, {
+    y: 34, opacity: 0, filter: "blur(6px)", stagger: 0.12, ease: "power3.out", duration: 0.9,
+    scrollTrigger: { trigger: inner, start: "top 82%" },
+  });
+}
+
 // Approach: a pinned, scrubbed cinematic sequence. The headline words fly up with a
 // touch of rotation, an accent line draws across, then the principles reveal in turn.
 function initApproach(): void {
@@ -222,6 +234,7 @@ export function initScrollStage(): void {
 
   initAnchors(lenis);
   initHeroParallax();
+  initMotto();
   initApproach();
   initExperience();
   initLabReveal();

@@ -137,7 +137,17 @@ The source portrait is a high-contrast black and white headshot.
    1200px with sharp, plus a tiny inline blur-up placeholder. The 1200px image is also the
    shader texture.
 
+`scripts/build-og.mjs` composes the 1200x630 Open Graph card: the cut-out portrait, the name
+and titles, and the motto. The Sanskrit line is drawn with the same subset Devanagari font the
+page uses, embedded in the card's SVG as base64 so the card renders identically anywhere with
+no system font.
+
 The generated images are committed, so a build, including CI, never needs the native tools.
+
+The motto font, `src/assets/fonts/noto-serif-devanagari-subset.woff2`, is Noto Serif Devanagari
+(SIL Open Font License) instanced to one weight and subset to only the glyphs the motto uses,
+with the Devanagari shaping tables kept, so it is about 13KB. It carries its own
+`unicode-range`, so it only ever loads for the motto's script.
 
 ## Deployment
 
